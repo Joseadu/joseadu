@@ -1,0 +1,41 @@
+.background-grid {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #1F1F2D;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 12px 12px;
+    z-index: -1;
+}
+
+.glow-effect:nth-child(1) {
+    position: absolute;
+    top: 55%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
+    opacity: 0.7;
+    pointer-events: none;
+    filter: blur(100px);
+}
+.glow-effect:nth-child(2) {
+    position: absolute;
+    top: 40%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
+    opacity: 0.7;
+    pointer-events: none;
+    filter: blur(100px);
+}
+
+.text-highlight {
+    
+}
