@@ -1,0 +1,35 @@
+name: Deploy Portfolio App
+
+on:
+  push:
+    branches:
+      - master  # Se ejecutará solo cuando hagas push a la rama master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Angular App
+        run: npm run build
+
+      - name: Deploy to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.IONOS_HOST  }}
+          username: ${{ secrets.IONOS_USER }}
+          password: ${{ secrets.IONOS_PASS }}
+          source: "dist/fungi/browser/"
+          target: "/kunden/homepages/25/d4298812114/htdocs/"
+          strip_components: 1
