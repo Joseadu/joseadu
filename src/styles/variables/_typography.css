@@ -1,0 +1,268 @@
+/* OSWALD */
+@font-face {
+    font-family: "Oswald";
+    src: url(../../assets/fonts/oswald/Oswald-ExtraLight.ttf) format(truetype);
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Oswald";
+    src: url(../../assets/fonts/oswald/Oswald-Light.ttf) format(truetype);
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Oswald";
+    src: url(../../assets/fonts/oswald/Oswald-Regular.ttf) format(truetype);
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Oswald";
+    src: url(../../assets/fonts/oswald/Oswald-Medium.ttf) format(truetype);
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Oswald";
+    src: url(../../assets/fonts/oswald/Oswald-SemiBold.ttf) format(truetype);
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Oswald";
+    src: url(../../assets/fonts/oswald/Oswald-Bold.ttf) format(truetype);
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* ROBOTO MONO */
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-Thin.ttf) format(truetype);
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-ThinItalic.ttf) format(truetype);
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-ExtraLight.ttf) format(truetype);
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-ExtraLightItalic.ttf) format(truetype);
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-Light.ttf) format(truetype);
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-LightItalic.ttf) format(truetype);
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-Regular.ttf) format(truetype);
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-Italic.ttf) format(truetype);
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-Medium.ttf) format(truetype);
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-MediumItalic.ttf) format(truetype);
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-SemiBold.ttf) format(truetype);
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-SemiBoldItalic.ttf) format(truetype);
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-Bold.ttf) format(truetype);
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto Mono";
+    src: url(../../assets/fonts/roboto-mono/RobotoMono-BoldItalic.ttf) format(truetype);
+    font-weight: 700;
+    font-style: italic;
+}
+
+:root {
+    --ff-oswald: "Oswald", sans-serif;
+    --ff-roboto-mono: "Roboto Mono", sans-serif;
+
+    --fs-300: 0.875rem;
+    --fs-400: 0.875rem;
+    --fs-500: 0.875rem;
+    --fs-600: 0.875rem;
+    --fs-700: 0.875rem;
+    --fs-800: 0.875rem;
+    --fs-900: 0.875rem;
+    --fs-1000: 0.875rem;
+
+    @media (width > 768px) {
+        --fs-500: 1.25rem;
+        --fs-600: 1.5rem;
+        --fs-700: 2rem;
+        --fs-800: 3rem;
+        --fs-900: 5rem;
+        --fs-1000: 7rem;
+    }
+
+    --text-main: var(--clr-gray-100);
+    --text-high-contrast: var(--clr-white);
+    --text-brand: var(--clr-brand-500);
+    --text-brand-light: var(--clr-brand-400);
+
+    --font-size-heading-sm: var(--fs-600);
+    --font-size-heading-regular: var(--fs-800);
+    --font-size-heading-lg: var(--fs-900);
+    --font-size-heading-xl: var(--fs-1000);
+
+    --font-size-sm: var(--fs-300);
+    --font-size-regular: var(--fs-400);
+    --font-size-md: var(--fs-500);
+    --font-size-lg: var(--fs-600);
+}
+
+html {
+    font-family: var(--ff-body);
+    line-height: 1.6;
+}
+
+body {
+    font-size: var(--font-size-regular);
+    color: var(--text-main);
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--ff-heading);
+    color: var(--text-high-contrast);
+}
+
+h1,
+.h1 {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-heading-regular);
+    font-weight: 200;
+}
+
+a {
+    color: var(--text-high-contrast);
+}
+
+a:hover,
+a:focus-visible {
+    color: var(--text-brand-light);
+}
+
+@layer utilities {
+    .text-main {
+        color: var(--text-main);
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-high-contrast {
+        color: var(--text-high-contrast);
+    }
+
+    .text-brand {
+        color: var(--text-brand);
+    }
+
+    .font-size-sm {
+        font-size: var(--font-size-sm);
+    }
+
+    .font-size-regular {
+        font-size: var(--font-size-regular);
+    }
+
+    .font-size-md {
+        font-size: var(--font-size-md);
+    }
+
+    .font-size-lg {
+        font-size: var(--font-size-lg);
+    }
+
+    .section-title {
+        font-size: var(--font-size-heading-regular);
+    }
+
+    .title-highlight {
+        color: var(--text-high-contrast);
+        font-family: var(--ff-oswald);
+        font-weight: 500;
+        font-size: var(--font-size-heading-xl);
+        display: block;
+        margin-left: 60px !important;
+    }
+
+    .title-highlight-aux {
+        color: var(--clr-brand-300);
+        font-weight: 200;
+        font-family: var(--ff-roboto-mono);
+        font-size: var(--font-size-heading-sm);
+        display: block;
+    }
+}

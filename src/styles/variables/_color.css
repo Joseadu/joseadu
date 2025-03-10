@@ -1,0 +1,35 @@
+:root {
+    --clr-white: hsl(0, 0%, 100%);
+
+    --clr-gray-100: hsl(0, 2%, 79%);
+
+    --clr-brand-300: #EFF1C5;
+    --clr-brand-400: hsl(25, 88%, 75%);
+    --clr-brand-500: hsl(25, 88%, 66%);
+
+    --clr-green-400: hsl(143, 19%, 49%);
+    --clr-green-500: #3a8256;
+    --clr-green-600: hsl(145, 29%, 19%);
+
+    --clr-brown-500: #433e3d;
+    --clr-brown-600: hsl(9, 7%, 21%);
+    --clr-brown-700: hsl(9, 8%, 16%);
+    --clr-brown-800: hsl(0, 6%, 15%);
+    --clr-brown-900: hsl(0, 6%, 13%);
+
+    --clr-orange-500: hsl(28, 43%, 28%);
+    --clr-red-500: hsl(359, 34%, 24%);
+    --clr-teal-500: hsl(186, 42%, 25%);
+
+
+
+    --background-accent-light: var(--clr-green-400);
+    --background-accent-main: var(--clr-green-500);
+    --background-accent-dark: var(--clr-green-600);
+
+    --background-extra-light: var(--clr-brown-500);
+    --background-light: var(--clr-brown-600);
+    --background-main: var(--clr-brown-700);
+    --background-dark: var(--clr-brown-800);
+    --background-extra-dark: var(--clr-brown-900);
+}
