@@ -30,6 +30,6 @@ jobs:
           host: ${{ secrets.IONOS_HOST  }}
           username: ${{ secrets.IONOS_USER }}
           password: ${{ secrets.IONOS_PASS }}
-          source: "dist/fungi/browser/"
+          source: "dist/joseadu/browser/"
           target: "/kunden/homepages/25/d4298812114/htdocs/"
           strip_components: 1
