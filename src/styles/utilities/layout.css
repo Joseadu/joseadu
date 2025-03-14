@@ -1,0 +1,22 @@
+.section {
+    --padding: var(--spacing-13);
+    padding-block: var(--padding);
+
+    @media (width < 768px) {
+        --padding: var(--spacing-10);
+    }
+}
+
+.wrapper {
+    --wrapper-max-width: 1130px;
+    --wrapper-padding: 0;
+
+    max-width: var(--wrapper-max-width);
+    padding-inline: var(--wrapper-padding);
+    margin-inline: auto;
+    box-sizing: content-box;
+
+    @media (width < 1130px) {
+        --wraper-padding: var(--spacing-05);
+    }
+}
