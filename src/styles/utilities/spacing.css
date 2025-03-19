@@ -1,3 +1,9 @@
 .mt-5 {
     margin-top: var(--spacing-05);
 }
+.mt-7 {
+    margin-top: var(--spacing-07);
+}
+.mt-10 {
+    margin-top: var(--spacing-10);
+}

@@ -1,6 +1,7 @@
 :root {
     --clr-white: hsl(0, 0%, 100%);
 
+    --clr-navyblue: #020A13;
     --clr-gray-100: hsl(0, 2%, 79%);
 
     --clr-brand-300: #EFF1C5;

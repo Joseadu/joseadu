@@ -203,6 +203,20 @@ h1,
     font-weight: 200;
 }
 
+h2,
+.h2 {
+    font-family: var(--ff-oswald);
+    font-size: var(--font-size-heading-regular);
+    font-weight: 500;
+}
+
+h3,
+.h3 {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-heading-sm);
+    font-weight: 500;
+}
+
 a {
     color: var(--text-high-contrast);
 }
@@ -264,5 +278,11 @@ a:focus-visible {
         font-family: var(--ff-roboto-mono);
         font-size: var(--font-size-heading-sm);
         display: block;
+    }
+    .text-vacancy {
+        color: var(--clr-gray-100);
+        font-weight: 200;
+        font-family: var(--ff-roboto-mono);
+        font-size: var(--font-size-sm);
     }
 }
