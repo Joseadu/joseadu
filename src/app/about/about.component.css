@@ -1,0 +1,20 @@
+.about-section {
+    position: relative;
+    border-left: 1px solid var(--clr-gray-100);
+    padding-left: var(--spacing-06);
+    padding-bottom: var(--spacing-06);
+    display: grid;
+    gap: var(--spacing-03);
+}
+
+.about-section::before {
+    content: "";
+    background-color: var(--clr-navyblue);
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid white;
+    left: -8px;
+    top: 0px;
+    width: 16px;
+    height: 16px;
+}
