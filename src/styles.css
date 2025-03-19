@@ -14,7 +14,10 @@
 }
 
 body {
-    font-family: "Oswald", sans-serif;
+    min-height: 100vh;
+    overflow-y: auto; /* Permite desplazamiento vertical */
+    position: relative; /* Evita problemas con el fondo */
+    font-family: "Roboto Mono", sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
@@ -47,6 +50,14 @@ h6 {
 
 p {
     text-wrap: pretty;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
 }
 
 h1,
