@@ -2,9 +2,16 @@
     position: relative;
     border-left: 1px solid var(--clr-gray-100);
     padding-left: var(--spacing-06);
-    padding-bottom: var(--spacing-06);
+    padding-bottom: var(--spacing-10);
     display: grid;
     gap: var(--spacing-03);
+
+    .text-vacancy {
+        color: var(--clr-gray-100);
+        font-weight: 200;
+        font-family: var(--ff-roboto-mono);
+        font-size: var(--font-size-sm);
+    }
 }
 
 .about-section::before {
@@ -17,4 +24,8 @@
     top: 0px;
     width: 16px;
     height: 16px;
+}
+
+.about-section:last-child {
+    padding-bottom: var(--spacing-06);
 }

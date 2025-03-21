@@ -279,10 +279,4 @@ a:focus-visible {
         font-size: var(--font-size-heading-sm);
         display: block;
     }
-    .text-vacancy {
-        color: var(--clr-gray-100);
-        font-weight: 200;
-        font-family: var(--ff-roboto-mono);
-        font-size: var(--font-size-sm);
-    }
 }
