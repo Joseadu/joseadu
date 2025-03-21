@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { MainNavComponent } from './main-nav/main-nav.component';
-import { routeTransition } from './services/route-transition';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +10,8 @@ import { routeTransition } from './services/route-transition';
     MainNavComponent
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  animations: [
-    routeTransition
-  ]
+  styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'joseadu';
-
-  constructor(protected route: ActivatedRoute) {}
 }
