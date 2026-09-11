@@ -73,6 +73,11 @@ export class ScrollGestureService implements OnDestroy {
     return () => this.gestureEndCallbacks.delete(cb);
   }
 
+  /** Dedo/puntero apoyado ahora mismo (aunque esté quieto). */
+  get isPressed(): boolean {
+    return this.observer?.isPressed ?? false;
+  }
+
   enable(): void {
     this.observer?.enable();
   }

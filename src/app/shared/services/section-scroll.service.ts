@@ -71,6 +71,8 @@ export class SectionScrollService implements OnDestroy {
   /** Sentido del estiramiento en curso desde un borde: 1 = hacia la siguiente, -1 = hacia la anterior. */
   private edgePull: 1 | -1 | null = null;
   private lastScrollY = 0;
+  private lastScrollDirection: 1 | -1 | 0 = 0;
+  private edgeSnapTimeout: ReturnType<typeof setTimeout> | undefined;
   private scrollHandler: (() => void) | null = null;
 
   private ensureInit(): void {
@@ -300,8 +302,7 @@ export class SectionScrollService implements OnDestroy {
   }
 
   private getEdgeState(entry: SectionEntry): { atTop: boolean; atBottom: boolean } {
-    const top = this.sectionOffsets.get(entry.id) ?? entry.element.offsetTop;
-    const bottomEdgeY = top + entry.element.offsetHeight - window.innerHeight;
+    const { top, bottomEdgeY } = this.getEdgePositions(entry);
     const y = window.scrollY;
     const eps = SECTION_SCROLL_CONFIG.TOP_EDGE_EPSILON_PX;
     return { atTop: y <= top + eps, atBottom: y >= bottomEdgeY - eps };
@@ -312,20 +313,61 @@ export class SectionScrollService implements OnDestroy {
     const y = window.scrollY;
     const prev = this.lastScrollY;
     this.lastScrollY = y;
+    if (y !== prev) this.lastScrollDirection = y > prev ? 1 : -1;
 
-    if (this.reducedMotion() || this.isTransitioning() || this.edgePull !== null) return;
-    const active = this.getActiveEntry();
-    if (!active || !active.boundaryLocked || this.isBoundaryLocked(active)) return;
+    const active = this.getTallActiveEntry();
+    if (!active) return;
 
-    const top = this.sectionOffsets.get(active.id) ?? active.element.offsetTop;
-    const bottomEdgeY = top + active.element.offsetHeight - window.innerHeight;
+    const { top, bottomEdgeY } = this.getEdgePositions(active);
     const eps = SECTION_SCROLL_CONFIG.TOP_EDGE_EPSILON_PX;
 
     if (prev <= bottomEdgeY + eps && y > bottomEdgeY + eps && this.getAdjacentId(1)) {
       this.wallAt(bottomEdgeY);
     } else if (prev >= top - eps && y < top - eps && this.getAdjacentId(-1)) {
       this.wallAt(top);
+    } else {
+      clearTimeout(this.edgeSnapTimeout);
+      this.edgeSnapTimeout = setTimeout(() => this.snapToNearEdge(), SECTION_SCROLL_CONFIG.EDGE_SNAP_IDLE_MS);
     }
+  }
+
+  /**
+   * La inercia a menudo se agota justo antes del borde y obliga a dar otro toque:
+   * si el scroll se queda quieto cerca del borde hacia el que iba, se termina de llevar hasta él.
+   */
+  private snapToNearEdge(): void {
+    const active = this.getTallActiveEntry();
+    const direction = this.lastScrollDirection;
+    if (!active || direction === 0 || this.scrollGesture.isPressed || !this.getAdjacentId(direction)) return;
+
+    const { top, bottomEdgeY } = this.getEdgePositions(active);
+    const edgeY = direction === 1 ? bottomEdgeY : top;
+    const distance = Math.abs(edgeY - window.scrollY);
+    if (
+      distance <= SECTION_SCROLL_CONFIG.TOP_EDGE_EPSILON_PX ||
+      distance > window.innerHeight * SECTION_SCROLL_CONFIG.EDGE_SNAP_VIEWPORT_RATIO
+    ) {
+      return;
+    }
+
+    this.smoothScroll.scrollTo(edgeY, {
+      force: true,
+      duration: SECTION_SCROLL_CONFIG.EDGE_SNAP_DURATION_S,
+      // Ya en el borde, se queda como muro (igual que si la inercia hubiese llegado a cruzarlo).
+      onComplete: () => this.smoothScroll.stop()
+    });
+  }
+
+  /** Sección activa bloqueada pero más alta que la pantalla, si no hay nada más en curso que deba mandar. */
+  private getTallActiveEntry(): SectionEntry | undefined {
+    if (this.reducedMotion() || this.isTransitioning() || this.edgePull !== null) return undefined;
+    const active = this.getActiveEntry();
+    return active?.boundaryLocked && !this.isBoundaryLocked(active) ? active : undefined;
+  }
+
+  private getEdgePositions(entry: SectionEntry): { top: number; bottomEdgeY: number } {
+    const top = this.sectionOffsets.get(entry.id) ?? entry.element.offsetTop;
+    return { top, bottomEdgeY: top + entry.element.offsetHeight - window.innerHeight };
   }
 
   private wallAt(y: number): void {
@@ -337,7 +379,11 @@ export class SectionScrollService implements OnDestroy {
     this.gestureDistance += dy;
 
     const progressToMax = Math.min(Math.abs(this.visualOffset) / SECTION_SCROLL_CONFIG.MAX_RUBBERBAND_PX, 1);
-    const resistance = SECTION_SCROLL_CONFIG.RUBBERBAND_RESISTANCE * (1 - Math.pow(progressToMax, 2) * 0.6);
+    // Estiramiento visual proporcional al umbral: con el dedo (umbral menor) la sección cede más por px
+    // y llega igual de tensa al punto de cambio con menos recorrido.
+    const thresholdScale = SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_PX / this.commitThresholdPx;
+    const resistance =
+      SECTION_SCROLL_CONFIG.RUBBERBAND_RESISTANCE * thresholdScale * (1 - Math.pow(progressToMax, 2) * 0.6);
 
     this.visualOffset = this.clamp(
       this.visualOffset + dy * resistance,
@@ -503,6 +549,7 @@ export class SectionScrollService implements OnDestroy {
     if (this.keydownHandler) window.removeEventListener('keydown', this.keydownHandler);
     if (this.resizeHandler) window.removeEventListener('resize', this.resizeHandler);
     if (this.scrollHandler) window.removeEventListener('scroll', this.scrollHandler);
+    clearTimeout(this.edgeSnapTimeout);
     if (this.reducedMotionQuery && this.reducedMotionListener) {
       this.reducedMotionQuery.removeEventListener('change', this.reducedMotionListener);
     }
