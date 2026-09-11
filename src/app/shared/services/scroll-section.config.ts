@@ -9,8 +9,10 @@ export const SECTION_SCROLL_CONFIG = {
   DRAG_COMMIT_THRESHOLD_TOUCH_PX: 200,
   /** Velocidad (px/s) a partir de la cual un gesto corto pero rápido (flick) también commitea. */
   DRAG_COMMIT_VELOCITY: 900,
-  /** Tope visual del desplazamiento de rubber-band. */
+  /** Tope visual del desplazamiento de rubber-band con rueda/trackpad. */
   MAX_RUBBERBAND_PX: 400,
+  /** Lo mismo con el dedo: en una pantalla pequeña ese recorrido se ve excesivo. */
+  MAX_RUBBERBAND_PX_TOUCH: 50,
   /** Fracción del delta crudo que se traduce en offset visual durante la resistencia. */
   RUBBERBAND_RESISTANCE: 0.35,
   /** Duración del rebote cuando el gesto no supera el umbral. */
