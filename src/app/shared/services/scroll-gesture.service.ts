@@ -21,6 +21,8 @@ export class ScrollGestureService implements OnDestroy {
 
   readonly velocityY = signal(0);
   readonly isGestureActive = signal(false);
+  /** self.isDragging ya vuelve a false para cuando onStop dispara, así que lo recordamos del último tick. */
+  private lastWasDragging = false;
 
   init(): void {
     if (this.observer || typeof window === 'undefined') {
@@ -41,11 +43,20 @@ export class ScrollGestureService implements OnDestroy {
         onChangeY: (self) => {
           this.isGestureActive.set(true);
           this.velocityY.set(self.velocityY);
-          this.deltaCallbacks.forEach((cb) => cb(self.deltaY, self.velocityY));
+          // Observer no normaliza el signo del touch/pointer como el de la rueda: deltaY de un
+          // arrastre es el movimiento crudo del dedo (deslizar hacia arriba da negativo), mientras
+          // que en wheel positivo ya significa "scroll hacia abajo". Sin invertir, el swipe en
+          // móvil queda al revés de lo esperado.
+          this.lastWasDragging = self.isDragging;
+          const dy = self.isDragging ? -self.deltaY : self.deltaY;
+          this.deltaCallbacks.forEach((cb) => cb(dy, self.velocityY));
         },
         onStop: (self) => {
           this.isGestureActive.set(false);
-          this.gestureEndCallbacks.forEach((cb) => cb(self.velocityY));
+          // self.isDragging ya está en false aquí (se resetea en el release); usamos lo que
+          // recordamos del último tick para invertir la velocidad igual que hicimos con deltaY.
+          const velocityY = this.lastWasDragging ? -self.velocityY : self.velocityY;
+          this.gestureEndCallbacks.forEach((cb) => cb(velocityY));
         }
       });
     });
