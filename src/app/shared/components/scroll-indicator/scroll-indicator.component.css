@@ -1,0 +1,103 @@
+.scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    background: transparent;
+    border: none;
+    color: var(--clr-gray-100);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+}
+
+.scroll-indicator:hover {
+    color: var(--clr-brand-300);
+    transform: translateX(-50%) translateY(3px);
+}
+
+.scroll-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: var(--ff-roboto-mono);
+    opacity: 0.8;
+}
+
+.mouse-icon {
+    width: 20px;
+    height: 32px;
+    border: 2px solid currentColor;
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    transform-origin: top center;
+    will-change: transform;
+}
+
+.wheel-dot {
+    width: 3px;
+    height: 6px;
+    background-color: currentColor;
+    border-radius: 2px;
+    position: absolute;
+    top: 6px;
+    animation: scrollWheel 2s infinite ease-in-out;
+}
+
+@keyframes scrollWheel {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+}
+
+.scroll-indicator.scroll-up {
+    position: static;
+    transform: none;
+}
+
+@media (width < 768px) {
+    .scroll-indicator.is-inline {
+        position: static;
+        transform: none;
+        margin-top: var(--spacing-09);
+    }
+
+    .scroll-indicator.is-inline:hover {
+        transform: translateY(3px);
+    }
+}
+
+.scroll-indicator.scroll-up:hover {
+    transform: translateY(-3px);
+}
+
+.arrow-up-circle {
+    width: 28px;
+    height: 28px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    line-height: 1;
+    transition: transform 0.25s ease;
+    transform-origin: bottom center;
+    will-change: transform;
+}
+
+.scroll-indicator.scroll-up:hover .arrow-up-circle {
+    transform: translateY(-2px);
+}

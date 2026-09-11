@@ -1,16 +1,17 @@
-<section class="section">
+<div class="nav-container">
     <div class="wrapper" wrapper-width="wide">
         <nav>
-            <a routerLink="">
-                <img routerLink="#" class="nav-icon" src="assets/images/logo.svg" alt="">
+            <a class="nav-brand" (click)="navigateTo('#hero')" href="javascript:void(0)" aria-label="Ir al inicio">
+                <img class="nav-icon" src="assets/images/logo.svg" alt="joseadu logo">
             </a>
-            <ul>
+            <ul class="nav-links">
                 <li>
-                    <a routerLink="about">Sobre mí</a>
-                    <!-- <a routerLink="#">Proyectos</a>
-                    <a routerLink="#">Contacto</a> -->
+                    <a (click)="navigateTo('#about')" href="javascript:void(0)">Sobre mí</a>
+                </li>
+                <li>
+                    <a (click)="navigateTo('#experience')" href="javascript:void(0)">Experiencia</a>
                 </li>
             </ul>
         </nav>
     </div>
-</section>
+</div>
