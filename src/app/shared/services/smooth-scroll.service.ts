@@ -70,6 +70,11 @@ export class SmoothScrollService implements OnDestroy {
     });
   }
 
+  /** Salto inmediato a una posición, aunque Lenis esté parado. */
+  jumpTo(y: number): void {
+    this.lenis?.scrollTo(y, { immediate: true, force: true });
+  }
+
   destroy(): void {
     gsap.ticker.remove(this.updateTicker);
     this.lenis?.destroy();
