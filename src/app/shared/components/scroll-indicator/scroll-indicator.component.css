@@ -67,6 +67,18 @@
     transform: none;
 }
 
+@media (width < 768px) {
+    .scroll-indicator.is-inline {
+        position: static;
+        transform: none;
+        margin-top: var(--spacing-09);
+    }
+
+    .scroll-indicator.is-inline:hover {
+        transform: translateY(3px);
+    }
+}
+
 .scroll-indicator.scroll-up:hover {
     transform: translateY(-3px);
 }

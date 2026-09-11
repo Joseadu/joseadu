@@ -2,6 +2,7 @@
     type="button"
     class="scroll-indicator"
     [class.scroll-up]="variant() === 'up'"
+    [class.is-inline]="inline()"
     (click)="handleClick()"
     [attr.aria-label]="label()"
 >

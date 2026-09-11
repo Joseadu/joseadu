@@ -11,7 +11,13 @@
 }
 
 .nav-container {
-    padding-block: var(--spacing-05);
+    min-height: var(--nav-height);
+    display: flex;
+    align-items: center;
+}
+
+.nav-container .wrapper {
+    width: 100%;
 }
 
 nav {

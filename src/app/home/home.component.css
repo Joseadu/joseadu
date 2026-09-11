@@ -59,8 +59,8 @@
 
 @media (width < 768px) {
     .about-hero {
-        min-height: auto;
-        padding-top: var(--spacing-10);
-        padding-bottom: 5rem;
+        flex-direction: column;
+        padding-top: var(--nav-height);
+        padding-bottom: var(--spacing-11);
     }
 }
