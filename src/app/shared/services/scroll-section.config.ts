@@ -23,6 +23,12 @@ export const SECTION_SCROLL_CONFIG = {
   TRANSITION_COOLDOWN_MS: 150,
   /** onStopDelay de gsap/Observer: tiempo sin eventos para considerar el gesto terminado. */
   GESTURE_STOP_DELAY_S: 0.15,
+  /** Si la inercia se agota a menos de esta fracción de pantalla de un borde (yendo hacia él), se lleva hasta el borde. */
+  EDGE_SNAP_VIEWPORT_RATIO: 0.25,
+  /** Tiempo sin scroll para considerar que la inercia ha terminado. */
+  EDGE_SNAP_IDLE_MS: 120,
+  /** Duración de ese último tramo hasta el borde. */
+  EDGE_SNAP_DURATION_S: 0.45,
   /** Tolerancia (px) para considerar que el scroll está exactamente en el borde de una sección (superior o inferior). */
   TOP_EDGE_EPSILON_PX: 4
 } as const;

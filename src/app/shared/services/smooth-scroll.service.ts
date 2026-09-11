@@ -59,7 +59,7 @@ export class SmoothScrollService implements OnDestroy {
   }
 
   scrollTo(
-    target: string | HTMLElement,
+    target: string | number | HTMLElement,
     options?: { offset?: number; duration?: number; force?: boolean; onComplete?: () => void }
   ): void {
     this.lenis?.scrollTo(target, {
