@@ -1,15 +1,32 @@
 <div class="nav-container">
     <div class="wrapper" wrapper-width="wide">
         <nav>
-            <a class="nav-brand" (click)="navigateTo('#hero')" href="javascript:void(0)" aria-label="Ir al inicio">
-                <img class="nav-icon" src="assets/images/logo.svg" alt="joseadu logo">
+            <a class="nav-brand" (click)="navigateTo('#hero')" href="javascript:void(0)" [attr.aria-label]="'nav.home' | translate">
+                <img class="nav-icon" src="assets/images/logo.svg" [alt]="'nav.logoAlt' | translate">
             </a>
             <ul class="nav-links">
                 <li>
-                    <a (click)="navigateTo('#about')" href="javascript:void(0)">Sobre mí</a>
+                    <a (click)="navigateTo('#about')" href="javascript:void(0)">{{ 'nav.about' | translate }}</a>
                 </li>
                 <li>
-                    <a (click)="navigateTo('#experience')" href="javascript:void(0)">Experiencia</a>
+                    <a (click)="navigateTo('#experience')" href="javascript:void(0)">{{ 'nav.experience' | translate }}</a>
+                </li>
+                <li>
+                    <div class="lang-switch" role="group" [attr.aria-label]="'nav.language' | translate">
+                        @for (lang of languages; track lang; let first = $first) {
+                            @if (!first) {
+                                <span class="lang-separator" aria-hidden="true">/</span>
+                            }
+                            <button
+                                type="button"
+                                class="lang-option"
+                                [class.is-active]="lang === currentLanguage()"
+                                [attr.aria-pressed]="lang === currentLanguage()"
+                                [attr.lang]="lang"
+                                (click)="setLanguage(lang)"
+                            >{{ lang }}</button>
+                        }
+                    </div>
                 </li>
             </ul>
         </nav>

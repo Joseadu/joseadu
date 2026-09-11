@@ -32,7 +32,7 @@ export class ScrollSectionDirective {
           id,
           element: this.elementRef.nativeElement,
           boundaryLocked: this.boundaryLocked(),
-          label: this.sectionLabel()
+          label: this.sectionLabel
         });
         this.destroyRef.onDestroy(() => this.sectionScroll.unregisterSection(id));
       },

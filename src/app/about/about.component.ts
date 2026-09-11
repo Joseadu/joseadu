@@ -7,13 +7,14 @@ import {
   OnDestroy,
   viewChildren
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PortfolioService } from '../shared/services/portfolio.service';
 import { revealOnScroll } from '../shared/utils/reveal-on-scroll';
 
 @Component({
     selector: 'app-about',
-    imports: [],
+    imports: [TranslatePipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './about.component.html',
     styleUrl: './about.component.css'

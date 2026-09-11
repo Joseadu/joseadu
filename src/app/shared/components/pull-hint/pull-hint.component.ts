@@ -36,7 +36,7 @@ export class PullHintComponent {
   private readonly arrowRef = viewChild<ElementRef<SVGElement>>('arrow');
 
   /** Sección a la que se vuelve al tirar hacia arriba. */
-  readonly targetLabel = computed(() => this.sectionScroll.adjacentSection(-1)?.label ?? '');
+  readonly targetLabel = computed(() => this.sectionScroll.adjacentSection(-1)?.label?.() ?? '');
 
   constructor() {
     afterNextRender(() => this.ngZone.runOutsideAngular(() => this.setupPull()));

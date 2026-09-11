@@ -1,10 +1,10 @@
 <section class="section">
     <div class="wrapper">
         <div class="section-intro reveal-item" #revealItem>
-            <span class="section-tag">// 02. EXPERIENCIA</span>
-            <h2 class="section-headline">Mi trayectoria</h2>
+            <span class="section-tag">{{ 'experience.tag' | translate }}</span>
+            <h2 class="section-headline">{{ 'experience.headline' | translate }}</h2>
             <p class="section-description">
-                Más de cuatro años construyendo interfaces, desde WordPress hasta arquitecturas de microfrontends con Angular.
+                {{ 'experience.description' | translate }}
             </p>
         </div>
 
@@ -41,7 +41,7 @@
     <div class="wrapper">
         <div class="side-by-side">
             <div class="side-card reveal-item" #revealItem>
-                <span class="section-tag">// 03. FORMACIÓN</span>
+                <span class="section-tag">{{ 'education.tag' | translate }}</span>
                 <div class="side-list">
                     @for (edu of education(); track edu.institution + edu.period) {
                         <div class="side-item">
@@ -64,7 +64,7 @@
             </div>
 
             <div class="side-card reveal-item" #revealItem>
-                <span class="section-tag">// 04. IDIOMAS</span>
+                <span class="section-tag">{{ 'languages.tag' | translate }}</span>
                 <div class="side-list">
                     @for (lang of languages(); track lang.language) {
                         <div class="side-item">

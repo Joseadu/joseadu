@@ -20,7 +20,7 @@ import { SectionScrollService } from '../../services/section-scroll.service';
 })
 export class ScrollIndicatorComponent {
   readonly target = input.required<string>();
-  readonly label = input('Scroll para explorar');
+  readonly label = input.required<string>();
   readonly variant = input<'down' | 'up'>('down');
   /** En vez de ir fijo al fondo de la sección, fluye en el documento: para secciones que en móvil
    *  dejan de ser 100vh, donde la posición absoluta acabaría solapando el contenido. */

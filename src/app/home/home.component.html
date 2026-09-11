@@ -1,35 +1,35 @@
 <!-- SECCIÓN HERO (100vh) -->
-<section class="hero" id="hero" #heroRef appScrollSection="hero" sectionLabel="Inicio">
+<section class="hero" id="hero" #heroRef appScrollSection="hero" [sectionLabel]="'sections.hero' | translate">
     <div class="headings" #headingsRef>
         <h1 class="hero-title">
-            Hola, soy
+            {{ 'hero.greeting' | translate }}
             <span class="title-highlight">Jose Díaz</span>
         </h1>
-        <p class="title-highlight-aux mt-5">FRONTEND DEVELOPER - ANGULAR</p>
+        <p class="title-highlight-aux mt-5">{{ 'hero.role' | translate }}</p>
     </div>
 
-    <app-scroll-indicator target="about" label="Scroll para explorar" />
+    <app-scroll-indicator target="about" [label]="'hero.scrollHint' | translate" />
 </section>
 
 <!-- SECCIÓN SOBRE MÍ (100vh) -->
-<section class="about-hero" id="about" appScrollSection="about" sectionLabel="Sobre mí">
+<section class="about-hero" id="about" appScrollSection="about" [sectionLabel]="'sections.about' | translate">
     <div class="wrapper">
         <div class="about-card">
-            <span class="section-tag reveal-item" #revealItem>// 01. SOBRE MÍ</span>
+            <span class="section-tag reveal-item" #revealItem>{{ 'about.tag' | translate }}</span>
             <h2 class="section-headline reveal-item" #revealItem>
-                De Teleco a front
+                {{ 'about.headline' | translate }}
             </h2>
             <div class="section-description reveal-item" #revealItem>
                 <p>
-                    Empecé en Telecomunicaciones, pero en algún momento me di cuenta de que lo mío era construir cosas que la gente usara todos los días a través de su dispositivo, así que decidí dar el paso al desarrollo web. Desde entonces he trabajado con Angular en proyectos desafiantes —con Exolum, El Corte Inglés y BMW entre otros— y donde he ido especializándome en lo que realmente me gusta. <br><br>
+                    {{ 'about.intro' | translate }} <br><br>
 
-                    No me conformo con que algo "funcione": me importa que el código sea mantenible y que la experiencia se sienta bien.
+                    {{ 'about.closing' | translate }}
                 </p>
             </div>
 
             <div class="skills-grid reveal-item" #revealItem>
                 <span class="skill-tag">Angular 16+</span>
-                <span class="skill-tag">Signals & Reactividad</span>
+                <span class="skill-tag">{{ 'about.skillSignals' | translate }}</span>
                 <span class="skill-tag">TypeScript</span>
                 <span class="skill-tag">NgRx / RxJS</span>
                 <span class="skill-tag">Microfrontends</span>
@@ -40,15 +40,16 @@
         </div>
     </div>
 
-    <app-scroll-indicator target="experience" label="Experiencia" [inline]="true" />
+    <app-scroll-indicator target="experience" [label]="'sections.experience' | translate" [inline]="true" />
 </section>
 
 <!-- SECCIÓN EXPERIENCIA (Timeline completo) -->
-<div id="experience" class="experience-section-wrapper" appScrollSection="experience" sectionLabel="Experiencia">
+<div id="experience" class="experience-section-wrapper" appScrollSection="experience"
+     [sectionLabel]="'sections.experience' | translate">
     <app-about></app-about>
 
     <!-- Indicador al pie para volver al inicio -->
     <div class="footer-scroll-wrapper">
-        <app-scroll-indicator target="hero" label="Volver arriba" variant="up" />
+        <app-scroll-indicator target="hero" [label]="'experience.backToTop' | translate" variant="up" />
     </div>
 </div>

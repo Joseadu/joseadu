@@ -7,6 +7,7 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AboutComponent } from '../about/about.component';
@@ -16,7 +17,7 @@ import { revealOnScroll } from '../shared/utils/reveal-on-scroll';
 
 @Component({
   selector: 'app-home',
-  imports: [AboutComponent, ScrollSectionDirective, ScrollIndicatorComponent],
+  imports: [AboutComponent, ScrollSectionDirective, ScrollIndicatorComponent, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

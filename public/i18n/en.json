@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "home": "Go to home",
+    "logoAlt": "joseadu logo",
+    "about": "About",
+    "experience": "Experience",
+    "language": "Language"
+  },
+  "sections": {
+    "hero": "Home",
+    "about": "About",
+    "experience": "Experience"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "role": "FRONTEND DEVELOPER - ANGULAR",
+    "scrollHint": "Scroll to explore"
+  },
+  "about": {
+    "tag": "// 01. ABOUT ME",
+    "headline": "From Telecom to frontend",
+    "intro": "I started out in Telecommunications, but at some point I realized that what I really wanted was to build things people use every day on their devices, so I made the move to web development. Since then I've worked with Angular on challenging projects —with Exolum, El Corte Inglés and BMW, among others— specializing in the work I truly enjoy.",
+    "closing": "It's not enough for me that something \"works\": I care about code that's maintainable and an experience that feels right.",
+    "skillSignals": "Signals & Reactivity"
+  },
+  "experience": {
+    "tag": "// 02. EXPERIENCE",
+    "headline": "My journey",
+    "description": "Over four years building interfaces, from WordPress sites to Angular micro-frontend architectures.",
+    "backToTop": "Back to top"
+  },
+  "education": {
+    "tag": "// 03. EDUCATION"
+  },
+  "languages": {
+    "tag": "// 04. LANGUAGES"
+  }
+}
