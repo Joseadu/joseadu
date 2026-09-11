@@ -62,6 +62,8 @@ export class SectionScrollService implements OnDestroy {
   private rubberbandSetter: ((value: number) => void) | null = null;
   /** Umbral de commit del gesto en curso: con el dedo se necesita menos recorrido que con la rueda. */
   private commitThresholdPx: number = SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_PX;
+  /** Tope visual del rubber-band del gesto en curso: con el dedo se estira menos que con la rueda. */
+  private maxRubberbandPx: number = SECTION_SCROLL_CONFIG.MAX_RUBBERBAND_PX;
 
   // Sección bloqueada pero más alta que la pantalla: scroll libre dentro y "muro" en sus bordes,
   // donde un gesto nuevo hacia fuera hace el mismo estiramiento que en una sección bloqueada.
@@ -252,6 +254,9 @@ export class SectionScrollService implements OnDestroy {
     this.commitThresholdPx = isTouch
       ? SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_TOUCH_PX
       : SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_PX;
+    this.maxRubberbandPx = isTouch
+      ? SECTION_SCROLL_CONFIG.MAX_RUBBERBAND_PX_TOUCH
+      : SECTION_SCROLL_CONFIG.MAX_RUBBERBAND_PX;
 
     if (this.isBoundaryLocked(active)) {
       this.handleBoundaryDelta(active, dy);
@@ -287,18 +292,20 @@ export class SectionScrollService implements OnDestroy {
     }
 
     const edge: 1 | -1 | null = dy > 0 && atBottom ? 1 : dy < 0 && atTop ? -1 : null;
-    // Un borde sin sección al otro lado (final de la página) no es un muro.
-    if (edge === null || !this.getAdjacentId(edge)) {
+    const startedAtThisEdge =
+      edge !== null && (edge === 1 ? this.gestureStartedAtBottom : this.gestureStartedAtTop);
+
+    // Sin borde, sin sección al otro lado, o borde alcanzado a mitad de gesto (no empezó ahí):
+    // no se estira nada y, sobre todo, no se para Lenis (eso congelaría la inercia justo antes del
+    // borde, sin rebote ni aviso, hasta que se soltara y se volviera a tocar).
+    if (edge === null || !this.getAdjacentId(edge) || !startedAtThisEdge) {
       this.smoothScroll.start();
       return;
     }
 
     this.smoothScroll.stop();
-    const startedAtThisEdge = edge === 1 ? this.gestureStartedAtBottom : this.gestureStartedAtTop;
-    if (startedAtThisEdge) {
-      this.edgePull = edge;
-      this.handleBoundaryDelta(active, dy);
-    }
+    this.edgePull = edge;
+    this.handleBoundaryDelta(active, dy);
   }
 
   private getEdgeState(entry: SectionEntry): { atTop: boolean; atBottom: boolean } {
@@ -378,17 +385,13 @@ export class SectionScrollService implements OnDestroy {
   private handleBoundaryDelta(active: SectionEntry, dy: number): void {
     this.gestureDistance += dy;
 
-    const progressToMax = Math.min(Math.abs(this.visualOffset) / SECTION_SCROLL_CONFIG.MAX_RUBBERBAND_PX, 1);
-    // Estiramiento visual proporcional al umbral: con el dedo (umbral menor) la sección cede más por px
-    // y llega igual de tensa al punto de cambio con menos recorrido.
-    const thresholdScale = SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_PX / this.commitThresholdPx;
-    const resistance =
-      SECTION_SCROLL_CONFIG.RUBBERBAND_RESISTANCE * thresholdScale * (1 - Math.pow(progressToMax, 2) * 0.6);
+    const progressToMax = Math.min(Math.abs(this.visualOffset) / this.maxRubberbandPx, 1);
+    const resistance = SECTION_SCROLL_CONFIG.RUBBERBAND_RESISTANCE * (1 - Math.pow(progressToMax, 2) * 0.6);
 
     this.visualOffset = this.clamp(
       this.visualOffset + dy * resistance,
-      -SECTION_SCROLL_CONFIG.MAX_RUBBERBAND_PX,
-      SECTION_SCROLL_CONFIG.MAX_RUBBERBAND_PX
+      -this.maxRubberbandPx,
+      this.maxRubberbandPx
     );
 
     this.getRubberbandSetter(active.element)(-this.visualOffset);
