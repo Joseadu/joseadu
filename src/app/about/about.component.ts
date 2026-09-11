@@ -1,5 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  viewChildren
+} from '@angular/core';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PortfolioService } from '../shared/services/portfolio.service';
+import { revealOnScroll } from '../shared/utils/reveal-on-scroll';
 
 @Component({
     selector: 'app-about',
@@ -8,10 +18,24 @@ import { PortfolioService } from '../shared/services/portfolio.service';
     templateUrl: './about.component.html',
     styleUrl: './about.component.css'
 })
-export class AboutComponent {
+export class AboutComponent implements AfterViewInit, OnDestroy {
     private readonly portfolioService = inject(PortfolioService);
+    private readonly revealItems = viewChildren<ElementRef<HTMLElement>>('revealItem');
 
     readonly experiences = this.portfolioService.experiences;
     readonly education = this.portfolioService.education;
     readonly languages = this.portfolioService.languages;
+
+    private triggers: ScrollTrigger[] = [];
+
+    ngAfterViewInit(): void {
+        if (typeof window === 'undefined') return;
+
+        const items = this.revealItems().map((ref) => ref.nativeElement);
+        this.triggers = revealOnScroll(items);
+    }
+
+    ngOnDestroy(): void {
+        this.triggers.forEach((trigger) => trigger.kill());
+    }
 }

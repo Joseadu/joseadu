@@ -1,12 +1,54 @@
-<section class="hero">
-    <!-- <app-main-nav></app-main-nav> -->
-    <div class="glow-effect-1"></div>
-    <div class="glow-effect-2"></div>
-    <div class="headings">
-        <h1 style="display: flex; flex-direction: column;">
-            Hola, soy 
+<!-- SECCIÓN HERO (100vh) -->
+<section class="hero" id="hero" #heroRef appScrollSection="hero">
+    <div class="headings" #headingsRef>
+        <h1 class="hero-title">
+            Hola, soy
             <span class="title-highlight">Jose Díaz</span>
         </h1>
         <p class="title-highlight-aux mt-5">FRONTEND DEVELOPER - ANGULAR</p>
     </div>
+
+    <app-scroll-indicator target="about" label="Scroll para explorar" />
 </section>
+
+<!-- SECCIÓN SOBRE MÍ (100vh) -->
+<section class="about-hero" id="about" appScrollSection="about">
+    <div class="wrapper">
+        <div class="about-card">
+            <span class="section-tag reveal-item" #revealItem>// 01. SOBRE MÍ</span>
+            <h2 class="section-headline reveal-item" #revealItem>
+                De Teleco a front
+            </h2>
+            <div class="section-description reveal-item" #revealItem>
+                <p>
+                    Empecé en Telecomunicaciones, pero en algún momento me di cuenta de que lo mío era construir cosas que la gente usara todos los días a través de su dispositivo, así que decidí dar el paso al desarrollo web. Desde entonces he trabajado con Angular en proyectos desafiantes —con Exolum, El Corte Inglés y BMW entre otros— y donde he ido especializándome en lo que realmente me gusta. <br><br>
+
+                    No me conformo con que algo "funcione": me importa que el código sea mantenible y que la experiencia se sienta bien.
+                </p>
+            </div>
+
+            <div class="skills-grid reveal-item" #revealItem>
+                <span class="skill-tag">Angular 16+</span>
+                <span class="skill-tag">Signals & Reactividad</span>
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">NgRx / RxJS</span>
+                <span class="skill-tag">Microfrontends</span>
+                <span class="skill-tag">Jasmine / Testing</span>
+                <span class="skill-tag">Clean Code</span>
+                <span class="skill-tag">Creative Motion</span>
+            </div>
+        </div>
+    </div>
+
+    <app-scroll-indicator target="experience" label="Experiencia" [inline]="true" />
+</section>
+
+<!-- SECCIÓN EXPERIENCIA (Timeline completo) -->
+<div id="experience" class="experience-section-wrapper" appScrollSection="experience" [boundaryLocked]="false">
+    <app-about></app-about>
+
+    <!-- Indicador al pie para volver al inicio -->
+    <div class="footer-scroll-wrapper">
+        <app-scroll-indicator target="hero" label="Volver arriba" variant="up" />
+    </div>
+</div>

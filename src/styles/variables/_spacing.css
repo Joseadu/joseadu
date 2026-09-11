@@ -15,4 +15,7 @@
     --spacing-15: 5rem; /* 80px */
     --spacing-16: 8rem; /* 136px */
     --spacing-17: 8.5rem; /* 136px */
+
+    /* Altura del header fijo (main-nav): logo 36px + padding-block spacing-05 arriba y abajo. */
+    --nav-height: 4.5rem; /* 72px */
 }

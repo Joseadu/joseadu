@@ -50,6 +50,7 @@ export class PortfolioService {
     },
     {
       company: 'Izertis',
+      client: 'BMW',
       period: '04/2023 - 12/2023',
       role: 'Junior Fullstack Consultant',
       responsibilities: [
@@ -76,7 +77,7 @@ export class PortfolioService {
   readonly education = signal<Education[]>([
     {
       institution: 'Platzi',
-      period: '01/2021 - Presente',
+      period: '01/2021 - 10/2023',
       title: 'Formación continua Frontend & Fullstack',
       details: [
         'Escuela fullstack con .NET y Javascript',

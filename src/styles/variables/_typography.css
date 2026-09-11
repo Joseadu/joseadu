@@ -144,14 +144,14 @@
     --ff-oswald: "Oswald", sans-serif;
     --ff-roboto-mono: "Roboto Mono", sans-serif;
 
-    --fs-300: 0.875rem;
+    --fs-300: 0.8125rem;
     --fs-400: 0.875rem;
-    --fs-500: 0.875rem;
-    --fs-600: 0.875rem;
-    --fs-700: 0.875rem;
-    --fs-800: 0.875rem;
-    --fs-900: 0.875rem;
-    --fs-1000: 0.875rem;
+    --fs-500: 1rem;
+    --fs-600: 1.15rem;
+    --fs-700: 1.5rem;
+    --fs-800: 2rem;
+    --fs-900: 2.75rem;
+    --fs-1000: 3.25rem;
 
     @media (width > 768px) {
         --fs-500: 1.25rem;
@@ -269,7 +269,11 @@ a:focus-visible {
         font-weight: 500;
         font-size: var(--font-size-heading-xl);
         display: block;
-        margin-left: 60px !important;
+        margin-left: 20px;
+
+        @media (width > 768px) {
+            margin-left: 60px;
+        }
     }
 
     .title-highlight-aux {
