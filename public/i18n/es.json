@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "home": "Ir al inicio",
+    "logoAlt": "Logo de joseadu",
+    "about": "Sobre mí",
+    "experience": "Experiencia",
+    "language": "Idioma"
+  },
+  "sections": {
+    "hero": "Inicio",
+    "about": "Sobre mí",
+    "experience": "Experiencia"
+  },
+  "hero": {
+    "greeting": "Hola, soy",
+    "role": "FRONTEND DEVELOPER - ANGULAR",
+    "scrollHint": "Scroll para explorar"
+  },
+  "about": {
+    "tag": "// 01. SOBRE MÍ",
+    "headline": "De Teleco a front",
+    "intro": "Empecé en Telecomunicaciones, pero en algún momento me di cuenta de que lo mío era construir cosas que la gente usara todos los días a través de su dispositivo, así que decidí dar el paso al desarrollo web. Desde entonces he trabajado con Angular en proyectos desafiantes —con Exolum, El Corte Inglés y BMW entre otros— y donde he ido especializándome en lo que realmente me gusta.",
+    "closing": "No me conformo con que algo \"funcione\": me importa que el código sea mantenible y que la experiencia se sienta bien.",
+    "skillSignals": "Signals & Reactividad"
+  },
+  "experience": {
+    "tag": "// 02. EXPERIENCIA",
+    "headline": "Mi trayectoria",
+    "description": "Más de cuatro años construyendo interfaces, desde WordPress hasta arquitecturas de microfrontends con Angular.",
+    "backToTop": "Volver arriba"
+  },
+  "education": {
+    "tag": "// 03. FORMACIÓN"
+  },
+  "languages": {
+    "tag": "// 04. IDIOMAS"
+  }
+}

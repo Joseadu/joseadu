@@ -1,4 +1,4 @@
-import { inject, Injectable, NgZone, OnDestroy, signal } from '@angular/core';
+import { inject, Injectable, NgZone, OnDestroy, Signal, signal } from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SmoothScrollService } from './smooth-scroll.service';
@@ -13,8 +13,8 @@ export interface SectionEntry {
    * y sus bordes hacen de muro con estiramiento. false = contenido totalmente libre, sin intervenir.
    */
   boundaryLocked: boolean;
-  /** Nombre legible, para indicadores que anuncian a qué sección se va. */
-  label?: string;
+  /** Nombre legible, para indicadores que anuncian a qué sección se va. Signal: cambia con el idioma. */
+  label?: Signal<string | undefined>;
 }
 
 /** Progreso del "tirón" hacia la sección adyacente: -1 (arriba) .. 1 (abajo); ±1 = umbral de commit alcanzado. */
@@ -54,6 +54,9 @@ export class SectionScrollService implements OnDestroy {
   private unsubscribeGestureEnd: (() => void) | null = null;
   private keydownHandler: ((e: KeyboardEvent) => void) | null = null;
   private resizeHandler: (() => void) | null = null;
+  /** Cambios de alto de las secciones sin resize de ventana (cambio de idioma, carga de fuentes...). */
+  private sectionResizeObserver: ResizeObserver | null = null;
+  private recalculateTimeout: ReturnType<typeof setTimeout> | undefined;
   private reducedMotionQuery: MediaQueryList | null = null;
   private reducedMotionListener: ((e: MediaQueryListEvent) => void) | null = null;
 
@@ -95,12 +98,9 @@ export class SectionScrollService implements OnDestroy {
       this.keydownHandler = (e) => this.handleKeydown(e);
       window.addEventListener('keydown', this.keydownHandler);
 
-      let resizeTimeout: ReturnType<typeof setTimeout>;
-      this.resizeHandler = () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => this.recalculate(), 150);
-      };
+      this.resizeHandler = () => this.scheduleRecalculate();
       window.addEventListener('resize', this.resizeHandler);
+      this.sectionResizeObserver = new ResizeObserver(() => this.scheduleRecalculate());
 
       // Los gestos solo llegan mientras hay dedo/rueda: la inercia (sobre todo la nativa en móvil)
       // se detecta aquí, por la posición de scroll.
@@ -130,12 +130,15 @@ export class SectionScrollService implements OnDestroy {
       onEnterBack: () => this.setActiveSection(entry.id)
     });
     this.triggers.set(entry.id, trigger);
+    this.sectionResizeObserver?.observe(entry.element);
 
     this.recalculate();
     this.resolveSectionReady(entry.id);
   }
 
   unregisterSection(id: string): void {
+    const entry = this.sections().find((s) => s.id === id);
+    if (entry) this.sectionResizeObserver?.unobserve(entry.element);
     this.sections.update((current) => current.filter((s) => s.id !== id));
     this.triggers.get(id)?.kill();
     this.triggers.delete(id);
@@ -174,6 +177,12 @@ export class SectionScrollService implements OnDestroy {
   /** Navegación directa (nav bar, scroll indicators, teclado): mismo camino que un gesto confirmado. */
   goToSection(id: string, opts?: { duration?: number }): void {
     this.commitTransition(id, { duration: opts?.duration });
+  }
+
+  /** Agrupa ráfagas de cambios de tamaño (resize, ResizeObserver) en un solo recálculo. */
+  private scheduleRecalculate(): void {
+    clearTimeout(this.recalculateTimeout);
+    this.recalculateTimeout = setTimeout(() => this.recalculate(), 150);
   }
 
   recalculate(): void {
@@ -559,6 +568,8 @@ export class SectionScrollService implements OnDestroy {
     if (this.resizeHandler) window.removeEventListener('resize', this.resizeHandler);
     if (this.scrollHandler) window.removeEventListener('scroll', this.scrollHandler);
     clearTimeout(this.edgeSnapTimeout);
+    clearTimeout(this.recalculateTimeout);
+    this.sectionResizeObserver?.disconnect();
     if (this.reducedMotionQuery && this.reducedMotionListener) {
       this.reducedMotionQuery.removeEventListener('change', this.reducedMotionListener);
     }

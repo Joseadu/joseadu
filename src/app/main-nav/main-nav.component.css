@@ -55,6 +55,49 @@ nav {
     color: var(--clr-brand-300);
 }
 
+.lang-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-gray-100);
+}
+
+.lang-separator {
+    opacity: 0.4;
+}
+
+.lang-option {
+    background: none;
+    border: none;
+    padding: 0.25rem 0.1rem;
+    font: inherit;
+    color: inherit;
+    text-transform: uppercase;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+.lang-option:hover {
+    color: var(--clr-brand-300);
+    opacity: 1;
+}
+
+.lang-option.is-active {
+    color: var(--clr-brand-300);
+    opacity: 1;
+    cursor: default;
+}
+
+/* Tres elementos en el header en pantallas estrechas: menos separación. */
+@media (width < 480px) {
+    .nav-links {
+        gap: var(--spacing-05);
+    }
+}
+
 .nav-icon {
     width: 36px;
     height: 36px;
