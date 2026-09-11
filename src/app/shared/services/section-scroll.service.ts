@@ -39,6 +39,9 @@ export class SectionScrollService implements OnDestroy {
   private readonly triggers = new Map<string, ScrollTrigger>();
   private readonly sectionReadyResolvers = new Map<string, Array<() => void>>();
   private readonly sectionOffsets = new Map<string, number>();
+  /** Si el contenido de una sección "boundary-locked" no cabe en el viewport, se trata como libre:
+   *  si no, quedaría atrapada (solo rebote/salto, sin forma de hacer scroll para ver el resto). */
+  private readonly sectionOverflowsViewport = new Map<string, boolean>();
   private readonly pullListeners = new Set<PullListener>();
   private readonly transitionListeners = new Set<TransitionListener>();
 
@@ -113,6 +116,7 @@ export class SectionScrollService implements OnDestroy {
     this.triggers.get(id)?.kill();
     this.triggers.delete(id);
     this.sectionOffsets.delete(id);
+    this.sectionOverflowsViewport.delete(id);
     if (this.rubberbandEl && this.sections().every((s) => s.element !== this.rubberbandEl)) {
       this.rubberbandEl = null;
       this.rubberbandSetter = null;
@@ -149,8 +153,16 @@ export class SectionScrollService implements OnDestroy {
   }
 
   recalculate(): void {
-    this.sections().forEach((s) => this.sectionOffsets.set(s.id, s.element.offsetTop));
+    this.sections().forEach((s) => {
+      this.sectionOffsets.set(s.id, s.element.offsetTop);
+      this.sectionOverflowsViewport.set(s.id, s.element.offsetHeight > window.innerHeight + 2);
+    });
     ScrollTrigger.refresh();
+  }
+
+  /** true solo si la sección debe ir paginada con resistencia: lo pide y además cabe en el viewport. */
+  private isBoundaryLocked(entry: SectionEntry): boolean {
+    return entry.boundaryLocked && !this.sectionOverflowsViewport.get(entry.id);
   }
 
   private resolveSectionReady(id: string): void {
@@ -204,7 +216,7 @@ export class SectionScrollService implements OnDestroy {
       this.transitionListeners.forEach((cb) => cb(id, SECTION_SCROLL_CONFIG.TRANSITION_DURATION_S));
     }
 
-    if (entry.boundaryLocked) {
+    if (this.isBoundaryLocked(entry)) {
       this.smoothScroll.stop();
     } else {
       this.smoothScroll.start();
@@ -216,7 +228,7 @@ export class SectionScrollService implements OnDestroy {
     const active = this.getActiveEntry();
     if (!active) return;
 
-    if (active.boundaryLocked) {
+    if (this.isBoundaryLocked(active)) {
       this.handleBoundaryDelta(active, dy);
     } else {
       this.handleEdgeDelta(active, dy, velocityY);
@@ -267,7 +279,7 @@ export class SectionScrollService implements OnDestroy {
     this.edgeAccum = 0;
 
     const active = this.getActiveEntry();
-    if (this.reducedMotion() || this.isTransitioning() || !active?.boundaryLocked) {
+    if (this.reducedMotion() || this.isTransitioning() || !active || !this.isBoundaryLocked(active)) {
       this.gestureDistance = 0;
       return;
     }
@@ -339,7 +351,7 @@ export class SectionScrollService implements OnDestroy {
   private handleKeydown(e: KeyboardEvent): void {
     if (this.reducedMotion() || this.isTransitioning()) return;
     const active = this.getActiveEntry();
-    if (!active?.boundaryLocked) return;
+    if (!active || !this.isBoundaryLocked(active)) return;
 
     const list = this.sections();
     if (list.length === 0) return;
