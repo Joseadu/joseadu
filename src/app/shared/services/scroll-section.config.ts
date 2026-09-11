@@ -25,6 +25,6 @@ export const SECTION_SCROLL_CONFIG = {
   EDGE_REENTRY_PX: 40,
   /** Umbral de velocidad reducido para el mismo re-entry. */
   EDGE_REENTRY_VELOCITY: 500,
-  /** Tolerancia (px) para considerar que el scroll está exactamente en el borde superior de una sección libre. */
+  /** Tolerancia (px) para considerar que el scroll está exactamente en el borde de una sección (superior o inferior). */
   TOP_EDGE_EPSILON_PX: 4
 } as const;

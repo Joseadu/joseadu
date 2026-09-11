@@ -61,6 +61,16 @@ export class SectionScrollService implements OnDestroy {
   // Re-entry al subir desde el borde superior de una sección libre (experience).
   private edgeAccum = 0;
 
+  // Sección bloqueada pero más alta que la pantalla: scroll libre dentro y "muro" en sus bordes,
+  // donde un gesto nuevo hacia fuera hace el mismo estiramiento que en una sección bloqueada.
+  private gestureInProgress = false;
+  private gestureStartedAtTop = false;
+  private gestureStartedAtBottom = false;
+  /** Sentido del estiramiento en curso desde un borde: 1 = hacia la siguiente, -1 = hacia la anterior. */
+  private edgePull: 1 | -1 | null = null;
+  private lastScrollY = 0;
+  private scrollHandler: (() => void) | null = null;
+
   private ensureInit(): void {
     if (this.initialized || typeof window === 'undefined') {
       return;
@@ -83,6 +93,12 @@ export class SectionScrollService implements OnDestroy {
         resizeTimeout = setTimeout(() => this.recalculate(), 150);
       };
       window.addEventListener('resize', this.resizeHandler);
+
+      // Los gestos solo llegan mientras hay dedo/rueda: la inercia (sobre todo la nativa en móvil)
+      // se detecta aquí, por la posición de scroll.
+      this.lastScrollY = window.scrollY;
+      this.scrollHandler = () => this.handleScroll();
+      window.addEventListener('scroll', this.scrollHandler, { passive: true });
     });
   }
 
@@ -149,7 +165,7 @@ export class SectionScrollService implements OnDestroy {
 
   /** Navegación directa (nav bar, scroll indicators, teclado): mismo camino que un gesto confirmado. */
   goToSection(id: string, opts?: { duration?: number }): void {
-    this.commitTransition(id, opts?.duration);
+    this.commitTransition(id, { duration: opts?.duration });
   }
 
   recalculate(): void {
@@ -230,9 +246,85 @@ export class SectionScrollService implements OnDestroy {
 
     if (this.isBoundaryLocked(active)) {
       this.handleBoundaryDelta(active, dy);
+    } else if (active.boundaryLocked) {
+      this.handleTallSectionDelta(active, dy);
     } else {
       this.handleEdgeDelta(active, dy, velocityY);
     }
+  }
+
+  /**
+   * Sección bloqueada que no cabe en pantalla: scroll libre dentro, pero sus bordes hacen de muro.
+   * Un gesto que empieza en un borde y empuja hacia fuera se estira igual que en una sección bloqueada;
+   * uno que llega al borde a mitad de gesto se queda parado ahí, y hace falta un gesto nuevo para estirar.
+   */
+  private handleTallSectionDelta(active: SectionEntry, dy: number): void {
+    const { atTop, atBottom } = this.getEdgeState(active);
+    if (!this.gestureInProgress) {
+      this.gestureInProgress = true;
+      this.gestureStartedAtTop = atTop;
+      this.gestureStartedAtBottom = atBottom;
+    }
+
+    if (this.edgePull !== null) {
+      if ((this.gestureDistance + dy) * this.edgePull <= 0) {
+        // El gesto se ha invertido: se cancela el estiramiento y vuelve el scroll libre.
+        this.edgePull = null;
+        this.gestureDistance = 0;
+        this.bounceBack(active.element);
+        this.smoothScroll.start();
+        return;
+      }
+      this.handleBoundaryDelta(active, dy);
+      return;
+    }
+
+    const edge: 1 | -1 | null = dy > 0 && atBottom ? 1 : dy < 0 && atTop ? -1 : null;
+    if (edge === null) {
+      this.smoothScroll.start();
+      return;
+    }
+
+    this.smoothScroll.stop();
+    const startedAtThisEdge = edge === 1 ? this.gestureStartedAtBottom : this.gestureStartedAtTop;
+    if (startedAtThisEdge) {
+      this.edgePull = edge;
+      this.handleBoundaryDelta(active, dy);
+    }
+  }
+
+  private getEdgeState(entry: SectionEntry): { atTop: boolean; atBottom: boolean } {
+    const top = this.sectionOffsets.get(entry.id) ?? entry.element.offsetTop;
+    const bottomEdgeY = top + entry.element.offsetHeight - window.innerHeight;
+    const y = window.scrollY;
+    const eps = SECTION_SCROLL_CONFIG.TOP_EDGE_EPSILON_PX;
+    return { atTop: y <= top + eps, atBottom: y >= bottomEdgeY - eps };
+  }
+
+  /** Si la inercia cruza un borde de una sección alta, se para en el borde (el muro). */
+  private handleScroll(): void {
+    const y = window.scrollY;
+    const prev = this.lastScrollY;
+    this.lastScrollY = y;
+
+    if (this.reducedMotion() || this.isTransitioning() || this.edgePull !== null) return;
+    const active = this.getActiveEntry();
+    if (!active || !active.boundaryLocked || this.isBoundaryLocked(active)) return;
+
+    const top = this.sectionOffsets.get(active.id) ?? active.element.offsetTop;
+    const bottomEdgeY = top + active.element.offsetHeight - window.innerHeight;
+    const eps = SECTION_SCROLL_CONFIG.TOP_EDGE_EPSILON_PX;
+
+    if (prev <= bottomEdgeY + eps && y > bottomEdgeY + eps) {
+      this.wallAt(bottomEdgeY);
+    } else if (prev >= top - eps && y < top - eps) {
+      this.wallAt(top);
+    }
+  }
+
+  private wallAt(y: number): void {
+    this.smoothScroll.stop();
+    this.smoothScroll.jumpTo(y);
   }
 
   private handleBoundaryDelta(active: SectionEntry, dy: number): void {
@@ -271,15 +363,19 @@ export class SectionScrollService implements OnDestroy {
     if (shouldReenter) {
       this.edgeAccum = 0;
       const prevId = this.getAdjacentId(-1);
-      if (prevId) this.commitTransition(prevId);
+      if (prevId) this.commitTransition(prevId, { alignBottom: true });
     }
   }
 
   private handleGestureEnd(velocityY: number): void {
     this.edgeAccum = 0;
+    this.gestureInProgress = false;
+    const edgePull = this.edgePull;
+    this.edgePull = null;
 
     const active = this.getActiveEntry();
-    if (this.reducedMotion() || this.isTransitioning() || !active || !this.isBoundaryLocked(active)) {
+    const pulling = !!active && (this.isBoundaryLocked(active) || edgePull !== null);
+    if (this.reducedMotion() || this.isTransitioning() || !active || !pulling) {
       this.gestureDistance = 0;
       return;
     }
@@ -297,7 +393,8 @@ export class SectionScrollService implements OnDestroy {
     }
 
     const direction = (distance !== 0 ? Math.sign(distance) : Math.sign(velocityY)) as 1 | -1;
-    const targetId = this.getAdjacentId(direction);
+    // Desde el borde de una sección alta solo se sale por ese borde.
+    const targetId = edgePull !== null && direction !== edgePull ? null : this.getAdjacentId(direction);
 
     if (!targetId) {
       this.bounceBack(active.element);
@@ -311,7 +408,7 @@ export class SectionScrollService implements OnDestroy {
       .call(() => {
         this.visualOffset = 0;
         this.pullListeners.forEach((cb) => cb(0));
-        this.commitTransition(targetId);
+        this.commitTransition(targetId, { alignBottom: direction === -1 });
       });
   }
 
@@ -327,7 +424,11 @@ export class SectionScrollService implements OnDestroy {
     });
   }
 
-  private commitTransition(targetId: string, duration?: number): void {
+  /**
+   * alignBottom: al volver hacia arriba a una sección más alta que la pantalla, aterriza en su final
+   * (donde se dejó) en vez de en su principio.
+   */
+  private commitTransition(targetId: string, options?: { duration?: number; alignBottom?: boolean }): void {
     if (this.isTransitioning()) return;
     const target = this.sections().find((s) => s.id === targetId);
     if (!target) return;
@@ -335,12 +436,18 @@ export class SectionScrollService implements OnDestroy {
     this.isTransitioning.set(true);
     this.smoothScroll.stop();
 
-    const durationS = duration ?? SECTION_SCROLL_CONFIG.TRANSITION_DURATION_S;
+    const durationS = options?.duration ?? SECTION_SCROLL_CONFIG.TRANSITION_DURATION_S;
     this.transitionListeners.forEach((cb) => cb(target.id, durationS));
+
+    const offset =
+      options?.alignBottom && this.sectionOverflowsViewport.get(target.id)
+        ? target.element.offsetHeight - window.innerHeight
+        : 0;
 
     this.smoothScroll.scrollTo(target.element, {
       force: true,
       duration: durationS,
+      offset,
       onComplete: () => {
         this.isTransitioning.set(false);
         this.setActiveSection(target.id);
@@ -399,6 +506,7 @@ export class SectionScrollService implements OnDestroy {
     this.unsubscribeGestureEnd?.();
     if (this.keydownHandler) window.removeEventListener('keydown', this.keydownHandler);
     if (this.resizeHandler) window.removeEventListener('resize', this.resizeHandler);
+    if (this.scrollHandler) window.removeEventListener('scroll', this.scrollHandler);
     if (this.reducedMotionQuery && this.reducedMotionListener) {
       this.reducedMotionQuery.removeEventListener('change', this.reducedMotionListener);
     }
