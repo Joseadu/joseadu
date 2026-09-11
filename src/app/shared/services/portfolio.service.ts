@@ -49,7 +49,7 @@ export class PortfolioService {
       stack: ['Angular 17-18', 'NgRx', 'OAuth2', 'Native Federation', 'Jasmine']
     },
     {
-      company: 'Izertis',
+      company: 'Izertis - BMW',
       period: '04/2023 - 12/2023',
       role: 'Junior Fullstack Consultant',
       responsibilities: [

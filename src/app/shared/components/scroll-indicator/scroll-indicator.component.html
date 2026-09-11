@@ -7,11 +7,11 @@
 >
     @if (variant() === 'down') {
         <span class="scroll-label">{{ label() }}</span>
-        <div class="mouse-icon">
+        <div class="mouse-icon" #icon>
             <span class="wheel-dot"></span>
         </div>
     } @else {
-        <div class="arrow-up-circle">↑</div>
+        <div class="arrow-up-circle" #icon>↑</div>
         <span class="scroll-label">{{ label() }}</span>
     }
 </button>

@@ -37,6 +37,8 @@
     position: relative;
     display: flex;
     justify-content: center;
+    transform-origin: top center;
+    will-change: transform;
 }
 
 .wheel-dot {
@@ -80,6 +82,8 @@
     font-size: 0.9rem;
     line-height: 1;
     transition: transform 0.25s ease;
+    transform-origin: bottom center;
+    will-change: transform;
 }
 
 .scroll-indicator.scroll-up:hover .arrow-up-circle {

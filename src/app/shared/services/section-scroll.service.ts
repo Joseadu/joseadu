@@ -298,6 +298,7 @@ export class SectionScrollService implements OnDestroy {
       .to(activeEl, { y: 0, duration: 0.15, ease: 'power1.in' })
       .call(() => {
         this.visualOffset = 0;
+        this.pullListeners.forEach((cb) => cb(0));
         this.commitTransition(targetId);
       });
   }
