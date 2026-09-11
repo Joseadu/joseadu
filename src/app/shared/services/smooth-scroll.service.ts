@@ -9,7 +9,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 export class SmoothScrollService implements OnDestroy {
   private readonly ngZone = inject(NgZone);
   private lenis: Lenis | null = null;
-  private rafId: number | null = null;
+  private readonly updateTicker = (time: number) => {
+    this.lenis?.raf(time * 1000);
+  };
 
   init(): void {
     if (this.lenis || typeof window === 'undefined') {
@@ -32,34 +34,44 @@ export class SmoothScrollService implements OnDestroy {
       // Sincronizar Lenis con GSAP ScrollTrigger
       this.lenis.on('scroll', ScrollTrigger.update);
 
-      const updateTicker = (time: number) => {
-        this.lenis?.raf(time * 1000);
-      };
-
-      gsap.ticker.add(updateTicker);
+      gsap.ticker.add(this.updateTicker);
       gsap.ticker.lagSmoothing(0);
-
-      // Loop de animación RAF
-      const raf = (time: number) => {
-        this.lenis?.raf(time);
-        this.rafId = requestAnimationFrame(raf);
-      };
-      this.rafId = requestAnimationFrame(raf);
     });
   }
 
-  scrollTo(target: string | HTMLElement, options?: { offset?: number; duration?: number }): void {
+  /**
+   * Instancia de Lenis para consumidores que necesitan control fino (p.ej. SectionScrollService).
+   */
+  getLenis(): Lenis | null {
+    return this.lenis;
+  }
+
+  get isStopped(): boolean {
+    return this.lenis?.isStopped ?? false;
+  }
+
+  stop(): void {
+    this.lenis?.stop();
+  }
+
+  start(): void {
+    this.lenis?.start();
+  }
+
+  scrollTo(
+    target: string | HTMLElement,
+    options?: { offset?: number; duration?: number; force?: boolean; onComplete?: () => void }
+  ): void {
     this.lenis?.scrollTo(target, {
       offset: options?.offset ?? 0,
-      duration: options?.duration ?? 1.4
+      duration: options?.duration ?? 1.4,
+      force: options?.force ?? false,
+      onComplete: options?.onComplete
     });
   }
 
   destroy(): void {
-    if (this.rafId) {
-      cancelAnimationFrame(this.rafId);
-      this.rafId = null;
-    }
+    gsap.ticker.remove(this.updateTicker);
     this.lenis?.destroy();
     this.lenis = null;
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
