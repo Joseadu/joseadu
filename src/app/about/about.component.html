@@ -2,104 +2,20 @@
     <div class="wrapper">
         <h3 class="mt-10">Mi experiencia</h3>
 
-        <div class="about-section mt-10">
-            <h4>Knowmad Mood - Exolum (12/2025 - 05/2026). <span class="text-vacancy">Frontend Software
-                    Developer</span></h4>
-            <ul class="exp-list">
-                <li>
-                    Desarrollo de aplicaciones Angular en arquitectura basada en microservicios.
-                </li>
-                <li>
-                    Migración de código legacy a estándares modernos (Signals, Standalone Components).
-                </li>
-                <li>
-                    Gestión global del estado mediante NgRx.
-                </li>
-                <li>
-                    Implementación de AG Grid para aplicaciones empresariales.
-                </li>
-                <li>
-                    Desarrollo de testing unitario con Jasmine.
-                </li>
-            </ul>
-            <p><strong>Stack:</strong> Angular, TypeScript, RxJS, NgRx, Signals, AG Grid, Jasmine.</p>
-        </div>
-        <div class="about-section">
-            <h4>Knowmad Mood - El Corte Inglés (03/2025 - 12/2025). <span class="text-vacancy">Frontend Software
-                    Developer</span></h4>
-            <ul class="exp-list">
-                <li>
-                    Desarrollo y mantenimiento de aplicaciones empresariales con Angular.
-                </li>
-                <li>
-                    Creación de componentes reutilizables y formularios dinámicos.
-                </li>
-                <li>
-                    Integración con APIs REST.
-                </li>
-                <li>
-                    Revisión de código y gestión de Pull Requests.
-                </li>
-                <li>
-                    Trabajo bajo metodología Scrum.
-                </li>
-            </ul>
-            <p><strong>Stack:</strong> Angular 16-19, RxJS, NgRx, Cypress, Git, Bitbucket.</p>
-        </div>
-        <div class="about-section">
-            <h4>Mydance (03/2024 - 03/2025). <span class="text-vacancy">Frontend Angular Developer</span></h4>
-            <ul class="exp-list">
-                <li>
-                    Desarrollo de arquitectura microfrontend mediante Native Federation.
-                </li>
-                <li>
-                    Implementación de autenticación OAuth2.
-                </li>
-                <li>
-                    Gestión de estado con NgRx.
-                </li>
-                <li>
-                    Desarrollo de componentes reutilizables y formularios complejos.
-                </li>
-                <li>
-                    Mentoría de un desarrollador junior.
-                </li>
-            </ul>
-            <p><strong>Stack:</strong> Angular 17-18, NgRx, OAuth2, Native Federation, Jasmine.</p>
-        </div>
-        <div class="about-section">
-            <h4>Izertis (04/2023 - 12/2023). <span class="text-vacancy">Junior Fullstack Consultant</span></h4>
-            <ul class="exp-list">
-                <li>
-                    Desarrollo de módulos web con Angular y .NET MVC.
-                </li>
-                <li>
-                    Implementación de APIs REST.
-                </li>
-                <li>
-                    Desarrollo de consultas SQL Server.
-                </li>
-                <li>
-                    Mantenimiento de aplicaciones corporativas.
-                </li>
-            </ul>
-            <p><strong>Stack:</strong> Angular, .NET MVC, SQL Server.</p>
-        </div>
-        <div class="about-section">
-            <h4>Concilio Communications (01/2021 - 08/2022). <span class="text-vacancy">Web Developer</span></h4>
-            <ul class="exp-list">
-                <li>
-                    Desarrollo y mantenimiento de sitios WordPress.
-                </li>
-                <li>
-                    Gestión de hosting e incidencias.
-                </li>
-                <li>
-                    Comunicación directa con clientes.
-                </li>
-            </ul>
-            <p><strong>Stack:</strong> Wordpress, Elementor Pro, Crocoblock stack</p>
-        </div>
+        @for (exp of experiences(); track exp.company + exp.period; let first = $first) {
+            <div class="about-section" [class.mt-10]="first">
+                <h4>
+                    {{ exp.company }}{{ exp.client ? ' - ' + exp.client : '' }} ({{ exp.period }}).
+                    <span class="text-vacancy">{{ exp.role }}</span>
+                </h4>
+                <ul class="exp-list">
+                    @for (item of exp.responsibilities; track item) {
+                        <li>{{ item }}</li>
+                    }
+                </ul>
+                <p><strong>Stack:</strong> {{ exp.stack.join(', ') }}</p>
+            </div>
+        }
     </div>
 </section>
 
@@ -107,19 +23,22 @@
     <div class="wrapper">
         <h3>Formación</h3>
 
-        <div class="about-section mt-10">
-            <h4>Platzi (01/2021 - Presente)</h4>
-            <ul>
-                <li>- Escuela fullstack con .NET y Javascript</li>
-                <li>- Escuela frontend con Angular</li>
-            </ul>
-        </div>
-        <div class="about-section">
-            <h4>IES La Rosaleda (00/2015 - 06/2017)</h4>
-            <ul>
-                <li>- Técnico en Instalaciones de Telecomunicaciones</li>
-            </ul>
-        </div>
+        @for (edu of education(); track edu.institution + edu.period; let first = $first) {
+            <div class="about-section" [class.mt-10]="first">
+                <h4>{{ edu.institution }} ({{ edu.period }})</h4>
+                @if (edu.details && edu.details.length > 0) {
+                    <ul>
+                        @for (detail of edu.details; track detail) {
+                            <li>- {{ detail }}</li>
+                        }
+                    </ul>
+                } @else {
+                    <ul>
+                        <li>- {{ edu.title }}</li>
+                    </ul>
+                }
+            </div>
+        }
     </div>
 </section>
 
@@ -127,11 +46,10 @@
     <div class="wrapper">
         <h3>Idiomas</h3>
 
-        <div class="about-section mt-10">
-            <h4>Inglés (profesional, conversacional)</h4>
-        </div>
-        <div class="about-section">
-            <h4>Español (nativo)</h4>
-        </div>
+        @for (lang of languages(); track lang.language; let first = $first) {
+            <div class="about-section" [class.mt-10]="first">
+                <h4>{{ lang.language }} ({{ lang.level }})</h4>
+            </div>
+        }
     </div>
 </section>
