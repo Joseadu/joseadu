@@ -60,6 +60,9 @@
 @media (width < 768px) {
     .about-hero {
         flex-direction: column;
+        /* Empuja el indicador al fondo real de la pantalla cuando el contenido es más corto que
+           el viewport (como en el hero); si es más alto, se comporta como flujo normal. */
+        justify-content: space-between;
         padding-top: var(--nav-height);
         padding-bottom: var(--spacing-11);
     }
