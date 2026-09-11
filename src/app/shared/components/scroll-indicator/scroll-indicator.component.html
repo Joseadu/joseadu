@@ -1,0 +1,17 @@
+<button
+    type="button"
+    class="scroll-indicator"
+    [class.scroll-up]="variant() === 'up'"
+    (click)="handleClick()"
+    [attr.aria-label]="label()"
+>
+    @if (variant() === 'down') {
+        <span class="scroll-label">{{ label() }}</span>
+        <div class="mouse-icon">
+            <span class="wheel-dot"></span>
+        </div>
+    } @else {
+        <div class="arrow-up-circle">↑</div>
+        <span class="scroll-label">{{ label() }}</span>
+    }
+</button>
