@@ -6,13 +6,13 @@ export const SECTION_SCROLL_CONFIG = {
   /** Distancia acumulada (px) de un gesto de rueda/trackpad para forzar el commit a la siguiente/anterior sección. */
   DRAG_COMMIT_THRESHOLD_PX: 400,
   /** Lo mismo para un arrastre con el dedo (móvil): la pantalla es corta y el dedo recorre menos. */
-  DRAG_COMMIT_THRESHOLD_TOUCH_PX: 200,
+  DRAG_COMMIT_THRESHOLD_TOUCH_PX: 50,
   /** Velocidad (px/s) a partir de la cual un gesto corto pero rápido (flick) también commitea. */
   DRAG_COMMIT_VELOCITY: 900,
   /** Tope visual del desplazamiento de rubber-band con rueda/trackpad. */
   MAX_RUBBERBAND_PX: 400,
   /** Lo mismo con el dedo: en una pantalla pequeña ese recorrido se ve excesivo. */
-  MAX_RUBBERBAND_PX_TOUCH: 50,
+  MAX_RUBBERBAND_PX_TOUCH: 160,
   /** Fracción del delta crudo que se traduce en offset visual durante la resistencia. */
   RUBBERBAND_RESISTANCE: 0.35,
   /** Duración del rebote cuando el gesto no supera el umbral. */

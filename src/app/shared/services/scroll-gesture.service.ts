@@ -22,7 +22,14 @@ export class ScrollGestureService implements OnDestroy {
 
   readonly velocityY = signal(0);
   readonly isGestureActive = signal(false);
-  /** self.isDragging ya vuelve a false para cuando onStop dispara, así que lo recordamos del último tick. */
+  /**
+   * Dedo/puntero apoyado, llevado por nosotros con onPress/onRelease. No vale self.isDragging: al soltar,
+   * Observer lo pone a false ANTES de entregar el último delta pendiente, y ese delta llegaría como si
+   * fuera de rueda (signo al revés y umbral de rueda justo antes de decidir el cambio de sección).
+   * onRelease se llama después de ese último delta, así que este flag sigue activo cuando llega.
+   */
+  private pointerDown = false;
+  /** Tipo del último delta, para el fin de gesto (onStop llega cuando ya se ha soltado). */
   private lastWasDragging = false;
 
   init(): void {
@@ -41,6 +48,12 @@ export class ScrollGestureService implements OnDestroy {
         // que ya previene el scroll nativo cuando está detenido (wheel y touch).
         preventDefault: false,
         onStopDelay: SECTION_SCROLL_CONFIG.GESTURE_STOP_DELAY_S,
+        onPress: () => {
+          this.pointerDown = true;
+        },
+        onRelease: () => {
+          this.pointerDown = false;
+        },
         onChangeY: (self) => {
           this.isGestureActive.set(true);
           this.velocityY.set(self.velocityY);
@@ -48,14 +61,14 @@ export class ScrollGestureService implements OnDestroy {
           // arrastre es el movimiento crudo del dedo (deslizar hacia arriba da negativo), mientras
           // que en wheel positivo ya significa "scroll hacia abajo". Sin invertir, el swipe en
           // móvil queda al revés de lo esperado.
-          this.lastWasDragging = self.isDragging;
-          const dy = self.isDragging ? -self.deltaY : self.deltaY;
-          this.deltaCallbacks.forEach((cb) => cb(dy, self.velocityY, self.isDragging));
+          const isTouch = this.pointerDown;
+          this.lastWasDragging = isTouch;
+          const dy = isTouch ? -self.deltaY : self.deltaY;
+          this.deltaCallbacks.forEach((cb) => cb(dy, self.velocityY, isTouch));
         },
         onStop: (self) => {
           this.isGestureActive.set(false);
-          // self.isDragging ya está en false aquí (se resetea en el release); usamos lo que
-          // recordamos del último tick para invertir la velocidad igual que hicimos con deltaY.
+          // Ya se ha soltado aquí; usamos el tipo del último delta para invertir la velocidad igual que deltaY.
           const velocityY = this.lastWasDragging ? -self.velocityY : self.velocityY;
           this.gestureEndCallbacks.forEach((cb) => cb(velocityY, this.lastWasDragging));
         }
