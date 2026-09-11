@@ -4,11 +4,11 @@
  */
 export const SECTION_SCROLL_CONFIG = {
   /** Distancia acumulada (px) de un gesto para forzar el commit a la siguiente/anterior sección. */
-  DRAG_COMMIT_THRESHOLD_PX: 110,
+  DRAG_COMMIT_THRESHOLD_PX: 400,
   /** Velocidad (px/s) a partir de la cual un gesto corto pero rápido (flick) también commitea. */
   DRAG_COMMIT_VELOCITY: 900,
   /** Tope visual del desplazamiento de rubber-band. */
-  MAX_RUBBERBAND_PX: 140,
+  MAX_RUBBERBAND_PX: 400,
   /** Fracción del delta crudo que se traduce en offset visual durante la resistencia. */
   RUBBERBAND_RESISTANCE: 0.35,
   /** Duración del rebote cuando el gesto no supera el umbral. */
