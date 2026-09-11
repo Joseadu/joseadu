@@ -12,6 +12,10 @@ export interface SectionEntry {
   boundaryLocked: boolean;
 }
 
+/** Progreso del "tirón" hacia la sección adyacente: -1 (arriba) .. 1 (abajo); ±1 = umbral de commit alcanzado. */
+type PullListener = (progress: number) => void;
+type TransitionListener = (toId: string, durationS: number) => void;
+
 /**
  * Orquesta el scroll "por secciones" con resistencia (rubber-band) + snap:
  * registra las secciones de la home, decide cuándo bloquear/liberar Lenis,
@@ -35,6 +39,8 @@ export class SectionScrollService implements OnDestroy {
   private readonly triggers = new Map<string, ScrollTrigger>();
   private readonly sectionReadyResolvers = new Map<string, Array<() => void>>();
   private readonly sectionOffsets = new Map<string, number>();
+  private readonly pullListeners = new Set<PullListener>();
+  private readonly transitionListeners = new Set<TransitionListener>();
 
   private unsubscribeDelta: (() => void) | null = null;
   private unsubscribeGestureEnd: (() => void) | null = null;
@@ -125,6 +131,18 @@ export class SectionScrollService implements OnDestroy {
     });
   }
 
+  /** Se emite en cada tick del gesto sobre una sección boundary-locked, y con 0 al rebotar. Fuera de NgZone. */
+  onPull(cb: PullListener): () => void {
+    this.pullListeners.add(cb);
+    return () => this.pullListeners.delete(cb);
+  }
+
+  /** Se emite al iniciar un cambio de sección, con la duración del scroll para poder sincronizarse. Fuera de NgZone. */
+  onTransition(cb: TransitionListener): () => void {
+    this.transitionListeners.add(cb);
+    return () => this.transitionListeners.delete(cb);
+  }
+
   /** Navegación directa (nav bar, scroll indicators, teclado): mismo camino que un gesto confirmado. */
   goToSection(id: string, opts?: { duration?: number }): void {
     this.commitTransition(id, opts?.duration);
@@ -172,12 +190,18 @@ export class SectionScrollService implements OnDestroy {
     const entry = this.sections().find((s) => s.id === id);
     if (!entry) return;
 
-    if (this.activeSectionId() !== id) {
+    const changed = this.activeSectionId() !== id;
+    if (changed) {
       this.activeSectionId.set(id);
     }
 
     if (this.isTransitioning()) {
       return;
+    }
+
+    // Cambio de sección sin commitTransition (carga inicial, scroll libre): también se notifica.
+    if (changed) {
+      this.transitionListeners.forEach((cb) => cb(id, SECTION_SCROLL_CONFIG.TRANSITION_DURATION_S));
     }
 
     if (entry.boundaryLocked) {
@@ -212,6 +236,9 @@ export class SectionScrollService implements OnDestroy {
     );
 
     this.getRubberbandSetter(active.element)(-this.visualOffset);
+
+    const pull = this.clamp(this.gestureDistance / SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_PX, -1, 1);
+    this.pullListeners.forEach((cb) => cb(pull));
   }
 
   private handleEdgeDelta(active: SectionEntry, dy: number, velocityY: number): void {
@@ -276,6 +303,7 @@ export class SectionScrollService implements OnDestroy {
   }
 
   private bounceBack(el: HTMLElement): void {
+    this.pullListeners.forEach((cb) => cb(0));
     gsap.to(el, {
       y: 0,
       duration: SECTION_SCROLL_CONFIG.BOUNCE_DURATION_S,
@@ -294,9 +322,12 @@ export class SectionScrollService implements OnDestroy {
     this.isTransitioning.set(true);
     this.smoothScroll.stop();
 
+    const durationS = duration ?? SECTION_SCROLL_CONFIG.TRANSITION_DURATION_S;
+    this.transitionListeners.forEach((cb) => cb(target.id, durationS));
+
     this.smoothScroll.scrollTo(target.element, {
       force: true,
-      duration: duration ?? SECTION_SCROLL_CONFIG.TRANSITION_DURATION_S,
+      duration: durationS,
       onComplete: () => {
         this.isTransitioning.set(false);
         this.setActiveSection(target.id);
@@ -360,6 +391,8 @@ export class SectionScrollService implements OnDestroy {
     }
     this.triggers.forEach((t) => t.kill());
     this.triggers.clear();
+    this.pullListeners.clear();
+    this.transitionListeners.clear();
   }
 
   ngOnDestroy(): void {
