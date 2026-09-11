@@ -1,12 +1,68 @@
-<section class="hero">
-    <!-- <app-main-nav></app-main-nav> -->
+<!-- SECCIÓN HERO (100vh) -->
+<section class="hero" id="hero" #heroRef>
     <div class="glow-effect-1"></div>
     <div class="glow-effect-2"></div>
     <div class="headings">
-        <h1 style="display: flex; flex-direction: column;">
+        <h1 class="hero-title">
             Hola, soy 
             <span class="title-highlight">Jose Díaz</span>
         </h1>
         <p class="title-highlight-aux mt-5">FRONTEND DEVELOPER - ANGULAR</p>
     </div>
+
+    <button type="button" class="scroll-indicator" (click)="scrollTo('#about')" aria-label="Bajar a la sección Sobre mí">
+        <span class="scroll-label">Scroll para explorar</span>
+        <div class="mouse-icon">
+            <span class="wheel-dot"></span>
+        </div>
+    </button>
 </section>
+
+<!-- SECCIÓN SOBRE MÍ (100vh) -->
+<section class="about-hero" id="about" #aboutRef>
+    <div class="wrapper">
+        <div class="about-card">
+            <span class="section-tag reveal-item">// 01. SOBRE MÍ</span>
+            <h2 class="about-headline reveal-item">
+                Desarrollo aplicaciones web modernas con foco en arquitectura escalable, solidez técnica y experiencia interactiva.
+            </h2>
+            <div class="about-description reveal-item">
+                <p>
+                    Frontend Software Developer especializado en <strong>Angular</strong> (con experiencia en versiones modernas con Signals, Standalone Components y NgRx). Mi enfoque combina la excelencia en código (microfrontends con Native Federation, microservicios, testing unitario con Jasmine) con una atención cuidada al rendimiento y la fluidez visual.
+                </p>
+            </div>
+
+            <div class="skills-grid reveal-item">
+                <span class="skill-tag">Angular 19</span>
+                <span class="skill-tag">Signals & Reactividad</span>
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">NgRx / RxJS</span>
+                <span class="skill-tag">Microfrontends</span>
+                <span class="skill-tag">Jasmine / Testing</span>
+                <span class="skill-tag">Clean Code</span>
+                <span class="skill-tag">Creative Motion</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón indicador homogéneo para bajar a Experiencia -->
+    <button type="button" class="scroll-indicator" (click)="scrollTo('#experience')" aria-label="Bajar a la sección Experiencia">
+        <span class="scroll-label">Experiencia</span>
+        <div class="mouse-icon">
+            <span class="wheel-dot"></span>
+        </div>
+    </button>
+</section>
+
+<!-- SECCIÓN EXPERIENCIA (Timeline completo) -->
+<div id="experience" class="experience-section-wrapper">
+    <app-about></app-about>
+
+    <!-- Indicador al pie para volver al inicio -->
+    <div class="footer-scroll-wrapper">
+        <button type="button" class="scroll-indicator scroll-up" (click)="scrollTo('#hero')" aria-label="Volver al inicio">
+            <div class="arrow-up-circle">↑</div>
+            <span class="scroll-label">Volver arriba</span>
+        </button>
+    </div>
+</div>
