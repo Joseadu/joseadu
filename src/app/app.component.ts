@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MainNavComponent } from './main-nav/main-nav.component';
+import { SmoothScrollService } from './shared/services/smooth-scroll.service';
 
 @Component({
     selector: 'app-root',
@@ -12,6 +13,11 @@ import { MainNavComponent } from './main-nav/main-nav.component';
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'joseadu';
+  private readonly smoothScroll = inject(SmoothScrollService);
+
+  ngOnInit(): void {
+    this.smoothScroll.init();
+  }
 }
