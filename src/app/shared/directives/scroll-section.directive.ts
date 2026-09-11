@@ -7,7 +7,8 @@ import { SectionScrollService } from '../services/section-scroll.service';
  *
  * @example
  * <section appScrollSection="hero">...</section>
- * <div appScrollSection="experience" [boundaryLocked]="false">...</div>
+ * <!-- Sin paginado: scroll totalmente libre -->
+ * <div appScrollSection="free" [boundaryLocked]="false">...</div>
  */
 @Directive({
   selector: '[appScrollSection]'

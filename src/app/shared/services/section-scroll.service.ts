@@ -8,7 +8,10 @@ import { SECTION_SCROLL_CONFIG } from './scroll-section.config';
 export interface SectionEntry {
   id: string;
   element: HTMLElement;
-  /** true = sección de 100vh paginada con resistencia (hero, about). false = contenido libre (experience). */
+  /**
+   * true = paginada con resistencia. Si además es más alta que la pantalla, se hace scroll libre dentro
+   * y sus bordes hacen de muro con estiramiento. false = contenido totalmente libre, sin intervenir.
+   */
   boundaryLocked: boolean;
 }
 
@@ -57,9 +60,8 @@ export class SectionScrollService implements OnDestroy {
   private visualOffset = 0;
   private rubberbandEl: HTMLElement | null = null;
   private rubberbandSetter: ((value: number) => void) | null = null;
-
-  // Re-entry al subir desde el borde superior de una sección libre (experience).
-  private edgeAccum = 0;
+  /** Umbral de commit del gesto en curso: con el dedo se necesita menos recorrido que con la rueda. */
+  private commitThresholdPx: number = SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_PX;
 
   // Sección bloqueada pero más alta que la pantalla: scroll libre dentro y "muro" en sus bordes,
   // donde un gesto nuevo hacia fuera hace el mismo estiramiento que en una sección bloqueada.
@@ -81,7 +83,7 @@ export class SectionScrollService implements OnDestroy {
     this.setupReducedMotion();
 
     this.ngZone.runOutsideAngular(() => {
-      this.unsubscribeDelta = this.scrollGesture.onDelta((dy, velocityY) => this.handleDelta(dy, velocityY));
+      this.unsubscribeDelta = this.scrollGesture.onDelta((dy, _velocityY, isTouch) => this.handleDelta(dy, isTouch));
       this.unsubscribeGestureEnd = this.scrollGesture.onGestureEnd((velocityY) => this.handleGestureEnd(velocityY));
 
       this.keydownHandler = (e) => this.handleKeydown(e);
@@ -239,17 +241,20 @@ export class SectionScrollService implements OnDestroy {
     }
   }
 
-  private handleDelta(dy: number, velocityY: number): void {
+  private handleDelta(dy: number, isTouch: boolean): void {
     if (this.reducedMotion() || this.isTransitioning()) return;
     const active = this.getActiveEntry();
-    if (!active) return;
+    // Sección libre: no se interviene.
+    if (!active?.boundaryLocked) return;
+
+    this.commitThresholdPx = isTouch
+      ? SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_TOUCH_PX
+      : SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_PX;
 
     if (this.isBoundaryLocked(active)) {
       this.handleBoundaryDelta(active, dy);
-    } else if (active.boundaryLocked) {
-      this.handleTallSectionDelta(active, dy);
     } else {
-      this.handleEdgeDelta(active, dy, velocityY);
+      this.handleTallSectionDelta(active, dy);
     }
   }
 
@@ -280,7 +285,8 @@ export class SectionScrollService implements OnDestroy {
     }
 
     const edge: 1 | -1 | null = dy > 0 && atBottom ? 1 : dy < 0 && atTop ? -1 : null;
-    if (edge === null) {
+    // Un borde sin sección al otro lado (final de la página) no es un muro.
+    if (edge === null || !this.getAdjacentId(edge)) {
       this.smoothScroll.start();
       return;
     }
@@ -315,9 +321,9 @@ export class SectionScrollService implements OnDestroy {
     const bottomEdgeY = top + active.element.offsetHeight - window.innerHeight;
     const eps = SECTION_SCROLL_CONFIG.TOP_EDGE_EPSILON_PX;
 
-    if (prev <= bottomEdgeY + eps && y > bottomEdgeY + eps) {
+    if (prev <= bottomEdgeY + eps && y > bottomEdgeY + eps && this.getAdjacentId(1)) {
       this.wallAt(bottomEdgeY);
-    } else if (prev >= top - eps && y < top - eps) {
+    } else if (prev >= top - eps && y < top - eps && this.getAdjacentId(-1)) {
       this.wallAt(top);
     }
   }
@@ -341,34 +347,11 @@ export class SectionScrollService implements OnDestroy {
 
     this.getRubberbandSetter(active.element)(-this.visualOffset);
 
-    const pull = this.clamp(this.gestureDistance / SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_PX, -1, 1);
+    const pull = this.clamp(this.gestureDistance / this.commitThresholdPx, -1, 1);
     this.pullListeners.forEach((cb) => cb(pull));
   }
 
-  private handleEdgeDelta(active: SectionEntry, dy: number, velocityY: number): void {
-    const offsetTop = this.sectionOffsets.get(active.id) ?? active.element.offsetTop;
-    const atTopEdge = window.scrollY <= offsetTop + SECTION_SCROLL_CONFIG.TOP_EDGE_EPSILON_PX;
-
-    if (!atTopEdge || dy >= 0) {
-      this.edgeAccum = 0;
-      return;
-    }
-
-    this.edgeAccum += dy;
-
-    const shouldReenter =
-      Math.abs(this.edgeAccum) >= SECTION_SCROLL_CONFIG.EDGE_REENTRY_PX ||
-      Math.abs(velocityY) >= SECTION_SCROLL_CONFIG.EDGE_REENTRY_VELOCITY;
-
-    if (shouldReenter) {
-      this.edgeAccum = 0;
-      const prevId = this.getAdjacentId(-1);
-      if (prevId) this.commitTransition(prevId, { alignBottom: true });
-    }
-  }
-
   private handleGestureEnd(velocityY: number): void {
-    this.edgeAccum = 0;
     this.gestureInProgress = false;
     const edgePull = this.edgePull;
     this.edgePull = null;
@@ -384,7 +367,7 @@ export class SectionScrollService implements OnDestroy {
     this.gestureDistance = 0;
 
     const shouldCommit =
-      Math.abs(distance) >= SECTION_SCROLL_CONFIG.DRAG_COMMIT_THRESHOLD_PX ||
+      Math.abs(distance) >= this.commitThresholdPx ||
       Math.abs(velocityY) >= SECTION_SCROLL_CONFIG.DRAG_COMMIT_VELOCITY;
 
     if (!shouldCommit) {
@@ -458,34 +441,47 @@ export class SectionScrollService implements OnDestroy {
   private handleKeydown(e: KeyboardEvent): void {
     if (this.reducedMotion() || this.isTransitioning()) return;
     const active = this.getActiveEntry();
-    if (!active || !this.isBoundaryLocked(active)) return;
+    if (!active?.boundaryLocked) return;
 
     const list = this.sections();
     if (list.length === 0) return;
 
+    let direction: 1 | -1 | null = null;
+    let targetId: string | undefined;
     switch (e.key) {
       case 'PageDown':
-      case 'ArrowDown': {
-        e.preventDefault();
-        const id = this.getAdjacentId(1);
-        if (id) this.commitTransition(id);
+      case 'ArrowDown':
+        direction = 1;
+        targetId = this.getAdjacentId(1) ?? undefined;
         break;
-      }
       case 'PageUp':
-      case 'ArrowUp': {
-        e.preventDefault();
-        const id = this.getAdjacentId(-1);
-        if (id) this.commitTransition(id);
+      case 'ArrowUp':
+        direction = -1;
+        targetId = this.getAdjacentId(-1) ?? undefined;
         break;
-      }
       case 'Home':
-        e.preventDefault();
-        this.commitTransition(list[0].id);
+        targetId = list[0].id;
         break;
       case 'End':
-        e.preventDefault();
-        this.commitTransition(list[list.length - 1].id);
+        targetId = list[list.length - 1].id;
         break;
+      default:
+        return;
+    }
+
+    // Sección alta: las flechas/páginas desplazan dentro con normalidad y solo saltan de sección en el borde.
+    if (direction !== null && !this.isBoundaryLocked(active)) {
+      const { atTop, atBottom } = this.getEdgeState(active);
+      const atEdge = direction === 1 ? atBottom : atTop;
+      if (!atEdge || !targetId) {
+        this.smoothScroll.start();
+        return;
+      }
+    }
+
+    e.preventDefault();
+    if (targetId && targetId !== active.id) {
+      this.commitTransition(targetId, { alignBottom: direction === -1 });
     }
   }
 

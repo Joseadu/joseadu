@@ -3,8 +3,9 @@ import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { SECTION_SCROLL_CONFIG } from './scroll-section.config';
 
-type DeltaCallback = (deltaY: number, velocityY: number) => void;
-type GestureEndCallback = (velocityY: number) => void;
+/** isTouch: el gesto es un arrastre (dedo/puntero), cuyas distancias no equivalen a las de la rueda. */
+type DeltaCallback = (deltaY: number, velocityY: number, isTouch: boolean) => void;
+type GestureEndCallback = (velocityY: number, isTouch: boolean) => void;
 
 /**
  * Wrapper fino sobre gsap/Observer: normaliza wheel/touch/pointer y expone
@@ -49,14 +50,14 @@ export class ScrollGestureService implements OnDestroy {
           // móvil queda al revés de lo esperado.
           this.lastWasDragging = self.isDragging;
           const dy = self.isDragging ? -self.deltaY : self.deltaY;
-          this.deltaCallbacks.forEach((cb) => cb(dy, self.velocityY));
+          this.deltaCallbacks.forEach((cb) => cb(dy, self.velocityY, self.isDragging));
         },
         onStop: (self) => {
           this.isGestureActive.set(false);
           // self.isDragging ya está en false aquí (se resetea en el release); usamos lo que
           // recordamos del último tick para invertir la velocidad igual que hicimos con deltaY.
           const velocityY = this.lastWasDragging ? -self.velocityY : self.velocityY;
-          this.gestureEndCallbacks.forEach((cb) => cb(velocityY));
+          this.gestureEndCallbacks.forEach((cb) => cb(velocityY, this.lastWasDragging));
         }
       });
     });
