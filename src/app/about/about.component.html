@@ -20,7 +20,7 @@
                         <p class="timeline-company">
                             {{ exp.company }}{{ exp.client ? ' · ' + exp.client : '' }}
                         </p>
-                        <ul class="timeline-list">
+                        <ul class="timeline-list dot-list">
                             @for (item of exp.responsibilities; track item) {
                                 <li>{{ item }}</li>
                             }
@@ -48,13 +48,13 @@
                             <h4>{{ edu.institution }}</h4>
                             <span class="side-period">{{ edu.period }}</span>
                             @if (edu.details && edu.details.length > 0) {
-                                <ul>
+                                <ul class="dot-list">
                                     @for (detail of edu.details; track detail) {
                                         <li>{{ detail }}</li>
                                     }
                                 </ul>
                             } @else {
-                                <ul>
+                                <ul class="dot-list">
                                     <li>{{ edu.title }}</li>
                                 </ul>
                             }

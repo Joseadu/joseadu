@@ -98,30 +98,11 @@
 }
 
 .timeline-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-02);
     margin-top: var(--spacing-02);
 }
 
 .timeline-list li {
-    position: relative;
-    padding-left: var(--spacing-05);
-    color: var(--clr-gray-100);
     font-size: 0.92rem;
-    line-height: 1.6;
-}
-
-.timeline-list li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.6em;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--clr-brand-300);
-    opacity: 0.6;
 }
 
 .timeline-stack {
@@ -166,29 +147,10 @@
 
 .side-item ul {
     margin-top: var(--spacing-02);
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
 }
 
 .side-item ul li {
-    position: relative;
-    padding-left: var(--spacing-05);
-    color: var(--clr-gray-100);
     font-size: 0.88rem;
-    line-height: 1.55;
-}
-
-.side-item ul li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--clr-brand-300);
-    opacity: 0.5;
 }
 
 @media (width < 768px) {

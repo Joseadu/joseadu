@@ -12,6 +12,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AboutComponent } from '../about/about.component';
 import { ScrollSectionDirective } from '../shared/directives/scroll-section.directive';
 import { ScrollIndicatorComponent } from '../shared/components/scroll-indicator/scroll-indicator.component';
+import { revealOnScroll } from '../shared/utils/reveal-on-scroll';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,6 @@ import { ScrollIndicatorComponent } from '../shared/components/scroll-indicator/
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   private readonly heroContainer = viewChild<ElementRef<HTMLElement>>('heroRef');
-  private readonly aboutContainer = viewChild<ElementRef<HTMLElement>>('aboutRef');
   private readonly headingsRef = viewChild<ElementRef<HTMLElement>>('headingsRef');
   private readonly revealItems = viewChildren<ElementRef<HTMLElement>>('revealItem');
 
@@ -51,29 +51,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     }
 
     // 2. Revelado en cascada de la sección Sobre mí (100vh)
-    const aboutEl = this.aboutContainer()?.nativeElement;
     const revealEls = this.revealItems().map((ref) => ref.nativeElement);
-    if (aboutEl && revealEls.length > 0) {
-      const aboutTrigger = ScrollTrigger.create({
-        trigger: aboutEl,
-        start: 'top 70%',
-        onEnter: () => {
-          gsap.fromTo(
-            revealEls,
-            { opacity: 0, y: 35 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              stagger: 0.12,
-              ease: 'power3.out',
-              overwrite: 'auto'
-            }
-          );
-        }
-      });
-      this.triggers.push(aboutTrigger);
-    }
+    this.triggers.push(...revealOnScroll(revealEls, { y: 35, duration: 0.8, start: 'top 70%' }));
   }
 
   ngOnDestroy(): void {
