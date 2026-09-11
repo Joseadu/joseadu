@@ -1,0 +1,8 @@
+/* Etiqueta pequeña de los indicadores de navegación (ratón de scroll, indicador de tirar hacia arriba). */
+.hint-label {
+    font-family: var(--ff-roboto-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.8;
+}

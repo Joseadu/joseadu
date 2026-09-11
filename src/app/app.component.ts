@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { RouterOutlet } from '@angular/router';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { GlowBackgroundComponent } from './shared/components/glow-background/glow-background.component';
+import { PullHintComponent } from './shared/components/pull-hint/pull-hint.component';
 import { SmoothScrollService } from './shared/services/smooth-scroll.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { SmoothScrollService } from './shared/services/smooth-scroll.service';
     imports: [
         RouterOutlet,
         MainNavComponent,
-        GlowBackgroundComponent
+        GlowBackgroundComponent,
+        PullHintComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './app.component.html',

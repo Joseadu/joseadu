@@ -6,7 +6,7 @@ import { SectionScrollService } from '../services/section-scroll.service';
  * Se auto-registra en SectionScrollService y se desregistra al destruirse.
  *
  * @example
- * <section appScrollSection="hero">...</section>
+ * <section appScrollSection="hero" sectionLabel="Inicio">...</section>
  * <!-- Sin paginado: scroll totalmente libre -->
  * <div appScrollSection="free" [boundaryLocked]="false">...</div>
  */
@@ -16,6 +16,8 @@ import { SectionScrollService } from '../services/section-scroll.service';
 export class ScrollSectionDirective {
   readonly id = input.required<string>({ alias: 'appScrollSection' });
   readonly boundaryLocked = input(true);
+  /** Nombre legible de la sección (p.ej. para el indicador de tirar hacia arriba). */
+  readonly sectionLabel = input<string>();
 
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly sectionScroll = inject(SectionScrollService);
@@ -29,7 +31,8 @@ export class ScrollSectionDirective {
         this.sectionScroll.registerSection({
           id,
           element: this.elementRef.nativeElement,
-          boundaryLocked: this.boundaryLocked()
+          boundaryLocked: this.boundaryLocked(),
+          label: this.sectionLabel()
         });
         this.destroyRef.onDestroy(() => this.sectionScroll.unregisterSection(id));
       },
