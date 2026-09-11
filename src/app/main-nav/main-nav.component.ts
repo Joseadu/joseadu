@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
     imports: [
         RouterLink
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './main-nav.component.html',
     styleUrl: './main-nav.component.css'
 })
