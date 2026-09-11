@@ -13,6 +13,8 @@ export interface SectionEntry {
    * y sus bordes hacen de muro con estiramiento. false = contenido totalmente libre, sin intervenir.
    */
   boundaryLocked: boolean;
+  /** Nombre legible, para indicadores que anuncian a qué sección se va. */
+  label?: string;
 }
 
 /** Progreso del "tirón" hacia la sección adyacente: -1 (arriba) .. 1 (abajo); ±1 = umbral de commit alcanzado. */
@@ -212,11 +214,15 @@ export class SectionScrollService implements OnDestroy {
     return this.sections().find((s) => s.id === id);
   }
 
-  private getAdjacentId(direction: 1 | -1): string | null {
+  /** Sección anterior (-1) o siguiente (1) a la activa. Reactivo: lee signals. */
+  adjacentSection(direction: 1 | -1): SectionEntry | undefined {
     const list = this.sections();
     const idx = list.findIndex((s) => s.id === this.activeSectionId());
-    if (idx === -1) return null;
-    return list[idx + direction]?.id ?? null;
+    return idx === -1 ? undefined : list[idx + direction];
+  }
+
+  private getAdjacentId(direction: 1 | -1): string | null {
+    return this.adjacentSection(direction)?.id ?? null;
   }
 
   /** Mantiene sincronizado el estado activo con el bloqueo/liberación de Lenis. */

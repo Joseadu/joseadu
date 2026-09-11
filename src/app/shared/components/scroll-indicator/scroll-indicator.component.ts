@@ -29,6 +29,7 @@ export class ScrollIndicatorComponent {
   private readonly sectionScroll = inject(SectionScrollService);
   private readonly ngZone = inject(NgZone);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly iconRef = viewChild<ElementRef<HTMLElement>>('icon');
 
   constructor() {
@@ -53,6 +54,8 @@ export class ScrollIndicatorComponent {
       const stretch = Math.max(pull * sign, 0);
       setStretch(1 + stretch * 0.6);
       setSqueeze(1 - stretch * 0.25);
+      // pull llega recortado a ±1: 1 = umbral alcanzado, soltar ya cambia de sección.
+      this.host.nativeElement.classList.toggle('is-ready', stretch >= 1);
     });
 
     this.destroyRef.onDestroy(off);

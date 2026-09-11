@@ -21,12 +21,9 @@
     transform: translateX(-50%) translateY(3px);
 }
 
-.scroll-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    font-family: var(--ff-roboto-mono);
-    opacity: 0.8;
+/* Tirón suficiente: soltar ya cambia de sección. */
+:host(.is-ready) .scroll-indicator {
+    color: var(--clr-brand-300);
 }
 
 .mouse-icon {

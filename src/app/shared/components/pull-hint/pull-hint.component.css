@@ -1,0 +1,30 @@
+:host {
+    position: fixed;
+    top: var(--nav-height);
+    left: 50%;
+    transform: translateX(-50%);
+    /* Justo por debajo del header (z-index 100). */
+    z-index: 99;
+    pointer-events: none;
+}
+
+.pull-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding-top: var(--spacing-02);
+    color: var(--clr-gray-100);
+    opacity: 0;
+    transition: color 0.2s ease;
+    will-change: transform, opacity;
+}
+
+/* Tirón suficiente: soltar ya cambia de sección. */
+.pull-hint.is-ready {
+    color: var(--clr-brand-300);
+}
+
+.pull-hint-arrow {
+    display: block;
+}
