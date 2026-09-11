@@ -3,8 +3,10 @@
  * Aisladas en su propio fichero para poder ajustarlas sin tocar la lógica de SectionScrollService.
  */
 export const SECTION_SCROLL_CONFIG = {
-  /** Distancia acumulada (px) de un gesto para forzar el commit a la siguiente/anterior sección. */
+  /** Distancia acumulada (px) de un gesto de rueda/trackpad para forzar el commit a la siguiente/anterior sección. */
   DRAG_COMMIT_THRESHOLD_PX: 400,
+  /** Lo mismo para un arrastre con el dedo (móvil): la pantalla es corta y el dedo recorre menos. */
+  DRAG_COMMIT_THRESHOLD_TOUCH_PX: 200,
   /** Velocidad (px/s) a partir de la cual un gesto corto pero rápido (flick) también commitea. */
   DRAG_COMMIT_VELOCITY: 900,
   /** Tope visual del desplazamiento de rubber-band. */
@@ -21,10 +23,6 @@ export const SECTION_SCROLL_CONFIG = {
   TRANSITION_COOLDOWN_MS: 150,
   /** onStopDelay de gsap/Observer: tiempo sin eventos para considerar el gesto terminado. */
   GESTURE_STOP_DELAY_S: 0.15,
-  /** Umbral de distancia reducido para el re-entry hacia arriba desde el borde superior de una sección libre. */
-  EDGE_REENTRY_PX: 40,
-  /** Umbral de velocidad reducido para el mismo re-entry. */
-  EDGE_REENTRY_VELOCITY: 500,
   /** Tolerancia (px) para considerar que el scroll está exactamente en el borde de una sección (superior o inferior). */
   TOP_EDGE_EPSILON_PX: 4
 } as const;
