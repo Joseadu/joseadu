@@ -1,55 +1,79 @@
 <section class="section">
     <div class="wrapper">
-        <h3 class="mt-10">Mi experiencia</h3>
+        <div class="section-intro reveal-item" #revealItem>
+            <span class="section-tag">// 02. EXPERIENCIA</span>
+            <h2 class="section-headline">Mi trayectoria</h2>
+            <p class="section-description">
+                Más de cuatro años construyendo interfaces, desde WordPress hasta arquitecturas de microfrontends con Angular.
+            </p>
+        </div>
 
-        @for (exp of experiences(); track exp.company + exp.period; let first = $first) {
-            <div class="about-section" [class.mt-10]="first">
-                <h4>
-                    {{ exp.company }}{{ exp.client ? ' - ' + exp.client : '' }} ({{ exp.period }}).
-                    <span class="text-vacancy">{{ exp.role }}</span>
-                </h4>
-                <ul class="exp-list">
-                    @for (item of exp.responsibilities; track item) {
-                        <li>{{ item }}</li>
+        <div class="timeline">
+            @for (exp of experiences(); track exp.company + exp.period) {
+                <article class="timeline-item reveal-item" #revealItem>
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-header">
+                            <h3 class="timeline-role">{{ exp.role }}</h3>
+                            <span class="timeline-period">{{ exp.period }}</span>
+                        </div>
+                        <p class="timeline-company">
+                            {{ exp.company }}{{ exp.client ? ' · ' + exp.client : '' }}
+                        </p>
+                        <ul class="timeline-list">
+                            @for (item of exp.responsibilities; track item) {
+                                <li>{{ item }}</li>
+                            }
+                        </ul>
+                        <div class="timeline-stack">
+                            @for (tech of exp.stack; track tech) {
+                                <span class="skill-tag">{{ tech }}</span>
+                            }
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrapper">
+        <div class="side-by-side">
+            <div class="side-card reveal-item" #revealItem>
+                <span class="section-tag">// 03. FORMACIÓN</span>
+                <div class="side-list">
+                    @for (edu of education(); track edu.institution + edu.period) {
+                        <div class="side-item">
+                            <h4>{{ edu.institution }}</h4>
+                            <span class="side-period">{{ edu.period }}</span>
+                            @if (edu.details && edu.details.length > 0) {
+                                <ul>
+                                    @for (detail of edu.details; track detail) {
+                                        <li>{{ detail }}</li>
+                                    }
+                                </ul>
+                            } @else {
+                                <ul>
+                                    <li>{{ edu.title }}</li>
+                                </ul>
+                            }
+                        </div>
                     }
-                </ul>
-                <p><strong>Stack:</strong> {{ exp.stack.join(', ') }}</p>
+                </div>
             </div>
-        }
-    </div>
-</section>
 
-<section class="section">
-    <div class="wrapper">
-        <h3>Formación</h3>
-
-        @for (edu of education(); track edu.institution + edu.period; let first = $first) {
-            <div class="about-section" [class.mt-10]="first">
-                <h4>{{ edu.institution }} ({{ edu.period }})</h4>
-                @if (edu.details && edu.details.length > 0) {
-                    <ul>
-                        @for (detail of edu.details; track detail) {
-                            <li>- {{ detail }}</li>
-                        }
-                    </ul>
-                } @else {
-                    <ul>
-                        <li>- {{ edu.title }}</li>
-                    </ul>
-                }
+            <div class="side-card reveal-item" #revealItem>
+                <span class="section-tag">// 04. IDIOMAS</span>
+                <div class="side-list">
+                    @for (lang of languages(); track lang.language) {
+                        <div class="side-item">
+                            <h4>{{ lang.language }}</h4>
+                            <span class="side-period">{{ lang.level }}</span>
+                        </div>
+                    }
+                </div>
             </div>
-        }
-    </div>
-</section>
-
-<section class="section">
-    <div class="wrapper">
-        <h3>Idiomas</h3>
-
-        @for (lang of languages(); track lang.language; let first = $first) {
-            <div class="about-section" [class.mt-10]="first">
-                <h4>{{ lang.language }} ({{ lang.level }})</h4>
-            </div>
-        }
+        </div>
     </div>
 </section>

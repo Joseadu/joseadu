@@ -39,60 +39,11 @@
     margin-inline: auto;
 }
 
-.section-tag {
-    font-family: var(--ff-roboto-mono);
-    font-size: var(--font-size-sm);
-    color: var(--clr-brand-300);
-    letter-spacing: 0.1em;
-    font-weight: 500;
-}
-
-.about-headline {
-    font-family: var(--ff-oswald);
-    font-size: clamp(1.8rem, 4vw, 2.75rem);
-    line-height: 1.25;
-    font-weight: 500;
-    color: var(--text-high-contrast);
-}
-
-.about-description {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-04);
-    color: var(--clr-gray-100);
-    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
-    line-height: 1.7;
-}
-
-.about-description strong {
-    color: var(--text-high-contrast);
-    font-weight: 500;
-}
-
 .skills-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
     margin-top: var(--spacing-02);
-}
-
-.skill-tag {
-    font-family: var(--ff-roboto-mono);
-    font-size: 0.8rem;
-    padding: 0.35rem 0.85rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: var(--clr-gray-100);
-    transition: all 0.25s ease;
-    cursor: default;
-}
-
-.skill-tag:hover {
-    border-color: var(--clr-brand-300);
-    color: var(--clr-brand-300);
-    background: rgba(239, 241, 197, 0.06);
-    transform: translateY(-2px);
 }
 
 .experience-section-wrapper {
