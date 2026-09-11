@@ -21,11 +21,11 @@
     margin-inline: auto;
     box-sizing: content-box;
 
-    &[wrapper-width="wide"] {
-        --wrapper-max-width: 1140px;
-    }
-
     @media (width < 1130px) {
         padding: var(--spacing-05);
     }
+}
+
+.wrapper[wrapper-width="wide"] {
+    --wrapper-max-width: 1140px;
 }
