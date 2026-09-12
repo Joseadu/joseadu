@@ -9,13 +9,13 @@ import {
 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ProjectsSectionComponent } from '../projects/projects-section.component';
 import { PortfolioService } from '../shared/services/portfolio.service';
 import { revealOnScroll } from '../shared/utils/reveal-on-scroll';
 
+/** Trayectoria profesional en formato timeline. */
 @Component({
     selector: 'app-about',
-    imports: [TranslatePipe, ProjectsSectionComponent],
+    imports: [TranslatePipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './about.component.html',
     styleUrl: './about.component.css'
@@ -25,8 +25,6 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
     private readonly revealItems = viewChildren<ElementRef<HTMLElement>>('revealItem');
 
     readonly experiences = this.portfolioService.experiences;
-    readonly education = this.portfolioService.education;
-    readonly languages = this.portfolioService.languages;
 
     private triggers: ScrollTrigger[] = [];
 

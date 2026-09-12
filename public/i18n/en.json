@@ -9,7 +9,9 @@
   "sections": {
     "hero": "Home",
     "about": "About",
-    "experience": "Experience"
+    "experience": "Experience",
+    "projects": "Projects",
+    "education": "Education"
   },
   "hero": {
     "greeting": "Hi, I'm",
@@ -33,7 +35,7 @@
     "tag": "// 03. PROJECTS",
     "headline": "Things I've built",
     "description": "Projects I've taken end to end, from the interface to going live.",
-    "visit": "View projects",
+    "visit": "View project",
     "code": "Project details"
   },
   "education": {

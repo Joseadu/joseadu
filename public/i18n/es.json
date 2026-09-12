@@ -9,7 +9,9 @@
   "sections": {
     "hero": "Inicio",
     "about": "Sobre mí",
-    "experience": "Experiencia"
+    "experience": "Experiencia",
+    "projects": "Proyectos",
+    "education": "Formación"
   },
   "hero": {
     "greeting": "Hola, soy",

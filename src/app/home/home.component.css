@@ -46,7 +46,8 @@
     margin-top: var(--spacing-02);
 }
 
-.experience-section-wrapper {
+/* Bloques de contenido que son sección del paginado (experiencia, proyectos, formación). */
+.section-wrapper {
     position: relative;
     width: 100%;
 }

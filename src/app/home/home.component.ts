@@ -11,13 +11,22 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AboutComponent } from '../about/about.component';
+import { EducationSectionComponent } from '../education/education-section.component';
+import { ProjectsSectionComponent } from '../projects/projects-section.component';
 import { ScrollSectionDirective } from '../shared/directives/scroll-section.directive';
 import { ScrollIndicatorComponent } from '../shared/components/scroll-indicator/scroll-indicator.component';
 import { revealOnScroll } from '../shared/utils/reveal-on-scroll';
 
 @Component({
   selector: 'app-home',
-  imports: [AboutComponent, ScrollSectionDirective, ScrollIndicatorComponent, TranslatePipe],
+  imports: [
+    AboutComponent,
+    ProjectsSectionComponent,
+    EducationSectionComponent,
+    ScrollSectionDirective,
+    ScrollIndicatorComponent,
+    TranslatePipe
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
