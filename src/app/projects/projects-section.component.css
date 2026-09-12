@@ -1,6 +1,6 @@
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-07);
 }
 
@@ -23,30 +23,27 @@
     transform: translateY(-2px);
 }
 
+/* El destacado ocupa la fila entera. */
+.project-card.is-featured {
+    grid-column: 1 / -1;
+}
+
+/* Los mockups son composiciones con fondo transparente, no capturas rectangulares: se muestran
+   enteros y con aire alrededor, en vez de recortados para llenar un marco. */
 .project-media {
     position: relative;
-    aspect-ratio: 4 / 3;
     display: grid;
     place-items: center;
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(2, 10, 19, 0.7));
-    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    padding: var(--spacing-06);
+    background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.05), transparent 70%);
 }
 
 .project-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* Las capturas de web se reconocen por su parte superior. */
-    object-position: top center;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
     display: block;
-}
-
-/* Numeración de las tarjetas sin captura, donde no hay sitio para la pastilla sobre la imagen. */
-.project-number {
-    font-family: var(--ff-roboto-mono);
-    font-size: var(--font-size-sm);
-    color: var(--clr-brand-300);
-    letter-spacing: 0.1em;
 }
 
 .project-index {
@@ -60,6 +57,14 @@
     border: 1px solid rgba(239, 241, 197, 0.25);
     border-radius: 999px;
     padding: 0.15rem 0.6rem;
+}
+
+/* Numeración de las tarjetas sin mockup, donde no hay sitio para la pastilla. */
+.project-number {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-brand-300);
+    letter-spacing: 0.1em;
 }
 
 .project-info {
@@ -113,7 +118,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-06);
-    margin-top: var(--spacing-02);
+    margin-top: auto;
+    padding-top: var(--spacing-04);
 }
 
 .project-links a {
@@ -128,34 +134,36 @@
     color: var(--clr-brand-300);
 }
 
-/* Solo con ratón: la ficha se descubre sobre la imagen. Con dedo no hay hover, así que
-   fuera de aquí la ficha va siempre visible bajo la captura. */
-@media (hover: hover) and (pointer: fine) {
-    .project-card.has-media .project-info {
-        position: absolute;
-        inset: 0;
-        justify-content: flex-end;
-        background: linear-gradient(
-            to top,
-            rgba(2, 10, 19, 0.97) 40%,
-            rgba(2, 10, 19, 0.88) 70%,
-            rgba(2, 10, 19, 0.45)
-        );
-        opacity: 0;
-        transform: translateY(10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
+@media (width >= 768px) {
+    /* Destacado con mockup: imagen a un lado, ficha al otro. Sin mockup se queda como tarjeta normal. */
+    .project-card.is-featured.has-media {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        align-items: center;
     }
 
-    .project-card.has-media:hover .project-info,
-    .project-card.has-media:focus-within .project-info {
-        opacity: 1;
-        transform: none;
+    .is-featured .project-media {
+        aspect-ratio: 16 / 10;
+        padding: var(--spacing-07);
+    }
+
+    .is-featured .project-info {
+        padding: var(--spacing-08) var(--spacing-07);
+    }
+
+    .is-featured .project-title {
+        font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+    }
+}
+
+@media (width < 768px) {
+    .project-grid {
+        grid-template-columns: 1fr;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .project-card,
-    .project-info {
+    .project-card {
         transition: none;
     }
 

@@ -9,9 +9,14 @@
         </div>
 
         <div class="project-grid">
-            @for (project of projects(); track project.id; let index = $index) {
-                <article class="project-card reveal-item" [class.has-media]="!!project.image" #revealItem>
-                    <!-- Sin captura no se dibuja marco: la ficha manda y la tarjeta queda como las de la trayectoria. -->
+            @for (project of projects(); track project.id; let index = $index, first = $first) {
+                <!-- El primero manda: ocupa la fila entera con el mockup a un lado y la ficha al otro. -->
+                <article
+                    class="project-card reveal-item"
+                    [class.is-featured]="first"
+                    [class.has-media]="!!project.image"
+                    #revealItem
+                >
                     @if (project.image) {
                         <div class="project-media">
                             <img [src]="project.image" [alt]="project.title" loading="lazy" decoding="async">
