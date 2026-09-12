@@ -14,7 +14,10 @@ export type EducationSource = Omit<Education, 'title' | 'details'> & {
   details?: Localized<string[]>;
 };
 export type LanguageSource = { language: Localized<string>; level: Localized<string> };
-export type ProjectSource = Omit<Project, 'description'> & { description: Localized<string> };
+export type ProjectSource = Omit<Project, 'description' | 'category'> & {
+  description: Localized<string>;
+  category?: Localized<string>;
+};
 
 export const EXPERIENCES: ExperienceSource[] = [
   {
@@ -162,8 +165,43 @@ export const LANGUAGES: LanguageSource[] = [
 
 export const PROJECTS: ProjectSource[] = [
   {
+    id: 'irudesigner',
+    title: 'Irudesigner',
+    category: {
+      es: 'Web para diseñadora de marcas',
+      en: 'Website for a brand designer'
+    },
+    description: {
+      es: 'Este es el sitio web de Irudesigner, diseñadora de marcas',
+      en: 'This is a website for Irudesigner, a brand designer.'
+    },
+    tags: [],
+    link: 'https://irudesigner.com/proyectos',
+    github: '/projects/irudesigner',
+    image: 'assets/images/irudesigner.png'
+  },
+  {
+    id: 'fitness-booking',
+    title: 'Fitness Booking',
+    category: {
+      es: 'App de reserva de clases',
+      en: 'Class booking app'
+    },
+    description: {
+      es: 'Proyecto personal: plataforma para reservar clases en un box de entrenamiento.',
+      en: 'Personal project: a platform for booking classes at a training box.'
+    },
+    tags: [],
+    image: 'assets/images/fitness-booking.png'
+  },
+  {
     id: 'joseadu-portfolio',
     title: 'joseadu.com',
+    category: {
+      es: 'Portfolio personal',
+      en: 'Personal portfolio'
+    },
+    year: '2026',
     description: {
       es: 'Portfolio personal interactivo desarrollado con Angular 19, OnPush, Signals y diseño minimalista enfocado en rendimiento y animaciones fluidas.',
       en: 'Interactive personal portfolio built with Angular 19, OnPush and Signals, with a minimalist design focused on performance and smooth animations.'

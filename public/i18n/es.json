@@ -9,7 +9,9 @@
   "sections": {
     "hero": "Inicio",
     "about": "Sobre mí",
-    "experience": "Experiencia"
+    "experience": "Experiencia",
+    "projects": "Proyectos",
+    "education": "Formación"
   },
   "hero": {
     "greeting": "Hola, soy",
@@ -29,10 +31,18 @@
     "description": "Más de cuatro años construyendo interfaces, desde WordPress hasta arquitecturas de microfrontends con Angular.",
     "backToTop": "Volver arriba"
   },
-  "education": {
-    "tag": "// 03. FORMACIÓN"
+  "projects": {
+    "tag": "// 03. PROYECTOS",
+    "headline": "Cosas que he construido",
+    "description": "Proyectos que he llevado de principio a fin, de la interfaz a la puesta en producción.",
+    "visit": "Ver proyecto",
+    "code": "Página de detalle"
   },
-  "languages": {
-    "tag": "// 04. IDIOMAS"
+  "education": {
+    "tag": "// 04. FORMACIÓN E IDIOMAS",
+    "headline": "Sigo aprendiendo",
+    "description": "Formación continua por mi cuenta y los idiomas con los que trabajo.",
+    "studies": "Formación",
+    "languages": "Idiomas"
   }
 }

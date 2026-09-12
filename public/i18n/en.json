@@ -9,7 +9,9 @@
   "sections": {
     "hero": "Home",
     "about": "About",
-    "experience": "Experience"
+    "experience": "Experience",
+    "projects": "Projects",
+    "education": "Education"
   },
   "hero": {
     "greeting": "Hi, I'm",
@@ -29,10 +31,18 @@
     "description": "Over four years building interfaces, from WordPress sites to Angular micro-frontend architectures.",
     "backToTop": "Back to top"
   },
-  "education": {
-    "tag": "// 03. EDUCATION"
+  "projects": {
+    "tag": "// 03. PROJECTS",
+    "headline": "Things I've built",
+    "description": "Projects I've taken end to end, from the interface to going live.",
+    "visit": "View project",
+    "code": "Project details"
   },
-  "languages": {
-    "tag": "// 04. LANGUAGES"
+  "education": {
+    "tag": "// 04. EDUCATION & LANGUAGES",
+    "headline": "Still learning",
+    "description": "Self-driven, continuous training, and the languages I work in.",
+    "studies": "Education",
+    "languages": "Languages"
   }
 }

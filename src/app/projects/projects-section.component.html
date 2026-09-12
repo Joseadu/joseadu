@@ -1,0 +1,78 @@
+<section class="section">
+    <div class="wrapper">
+        <div class="section-intro reveal-item" #revealItem>
+            <span class="section-tag">{{ 'projects.tag' | translate }}</span>
+            <h2 class="section-headline">{{ 'projects.headline' | translate }}</h2>
+            <p class="section-description">
+                {{ 'projects.description' | translate }}
+            </p>
+        </div>
+
+        <div class="project-grid">
+            @for (project of projects(); track project.id; let index = $index, first = $first) {
+                <!-- El primero manda: ocupa la fila entera con el mockup a un lado y la ficha al otro. -->
+                <article
+                    class="project-card reveal-item"
+                    [class.is-featured]="first"
+                    [class.has-media]="!!project.image"
+                    #revealItem
+                >
+                    @if (project.image) {
+                        <div class="project-media">
+                            <img [src]="project.image" [alt]="project.title" loading="lazy" decoding="async">
+                            <span class="project-index" aria-hidden="true">{{ index < 9 ? '0' + (index + 1) : index + 1 }}</span>
+                        </div>
+                    }
+
+                    <div class="project-info">
+                        @if (!project.image) {
+                            <span class="project-number" aria-hidden="true">{{ index < 9 ? '0' + (index + 1) : index + 1 }}</span>
+                        }
+
+                        <div class="project-info-header">
+                            <h3 class="project-title">{{ project.title }}</h3>
+                            @if (project.year) {
+                                <span class="project-year">{{ project.year }}</span>
+                            }
+                        </div>
+
+                        <!-- @if (project.category) {
+                            <p class="project-category">{{ project.category }}</p>
+                        } -->
+
+                        <p class="project-description">{{ project.description }}</p>
+
+                        @if (project.tags.length > 0) {
+                            <div class="project-stack">
+                                @for (tag of project.tags; track tag) {
+                                    <span class="skill-tag">{{ tag }}</span>
+                                }
+                            </div>
+                        }
+
+                        @if (project.link || project.github) {
+                            <div class="project-links">
+                                @if (project.link) {
+                                    <a [href]="project.link" target="_blank" rel="noopener noreferrer">
+                                        {{ 'projects.visit' | translate }} <span aria-hidden="true">↗</span>
+                                    </a>
+                                }
+                                @if (project.github) {
+                                    @if (project.github.startsWith('/')) {
+                                        <a [routerLink]="project.github">
+                                            {{ 'projects.code' | translate }} <span aria-hidden="true">→</span>
+                                        </a>
+                                    } @else {
+                                        <a [href]="project.github" target="_blank" rel="noopener noreferrer">
+                                            {{ 'projects.code' | translate }} <span aria-hidden="true">↗</span>
+                                        </a>
+                                    }
+                                }
+                            </div>
+                        }
+                    </div>
+                </article>
+            }
+        </div>
+    </div>
+</section>

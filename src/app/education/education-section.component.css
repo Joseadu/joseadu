@@ -1,0 +1,56 @@
+.side-by-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-09);
+}
+
+/* Encabezado de cada columna dentro de la sección (Formación / Idiomas). */
+.side-title {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-brand-300);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+}
+
+.side-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-06);
+}
+
+.side-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-06);
+}
+
+.side-item h4 {
+    font-family: var(--ff-oswald);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-high-contrast);
+}
+
+.side-period {
+    display: block;
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-gray-100);
+    margin-top: 0.2rem;
+}
+
+.side-item ul {
+    margin-top: var(--spacing-02);
+}
+
+.side-item ul li {
+    font-size: 0.88rem;
+}
+
+@media (width < 768px) {
+    .side-by-side {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-10);
+    }
+}

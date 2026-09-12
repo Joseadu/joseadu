@@ -44,9 +44,25 @@
 </section>
 
 <!-- SECCIÓN EXPERIENCIA (Timeline completo) -->
-<div id="experience" class="experience-section-wrapper" appScrollSection="experience"
+<div id="experience" class="section-wrapper has-indicator" appScrollSection="experience"
      [sectionLabel]="'sections.experience' | translate">
-    <app-about></app-about>
+    <app-about />
+
+    <app-scroll-indicator target="projects" [label]="'sections.projects' | translate" [inline]="true" />
+</div>
+
+<!-- SECCIÓN PROYECTOS -->
+<div id="projects" class="section-wrapper has-indicator" appScrollSection="projects"
+     [sectionLabel]="'sections.projects' | translate">
+    <app-projects-section />
+
+    <app-scroll-indicator target="education" [label]="'sections.education' | translate" [inline]="true" />
+</div>
+
+<!-- SECCIÓN FORMACIÓN E IDIOMAS -->
+<div id="education" class="section-wrapper is-full-height" appScrollSection="education"
+     [sectionLabel]="'sections.education' | translate">
+    <app-education-section />
 
     <!-- Indicador al pie para volver al inicio -->
     <div class="footer-scroll-wrapper">
