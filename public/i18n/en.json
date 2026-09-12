@@ -29,10 +29,17 @@
     "description": "Over four years building interfaces, from WordPress sites to Angular micro-frontend architectures.",
     "backToTop": "Back to top"
   },
+  "projects": {
+    "tag": "// 03. PROJECTS",
+    "headline": "Things I've built",
+    "description": "Projects I've taken end to end, from the interface to going live.",
+    "visit": "View projects",
+    "code": "Project details"
+  },
   "education": {
-    "tag": "// 03. EDUCATION"
+    "tag": "// 04. EDUCATION"
   },
   "languages": {
-    "tag": "// 04. LANGUAGES"
+    "tag": "// 05. LANGUAGES"
   }
 }

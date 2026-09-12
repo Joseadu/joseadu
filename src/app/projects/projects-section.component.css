@@ -1,0 +1,166 @@
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-07);
+}
+
+/* Mismo lenguaje que las tarjetas de la trayectoria (.timeline-card). */
+.project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+    border-color: rgba(239, 241, 197, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+}
+
+.project-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(2, 10, 19, 0.7));
+    overflow: hidden;
+}
+
+.project-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Las capturas de web se reconocen por su parte superior. */
+    object-position: top center;
+    display: block;
+}
+
+/* Numeración de las tarjetas sin captura, donde no hay sitio para la pastilla sobre la imagen. */
+.project-number {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-brand-300);
+    letter-spacing: 0.1em;
+}
+
+.project-index {
+    position: absolute;
+    top: var(--spacing-04);
+    left: var(--spacing-04);
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-brand-300);
+    background: rgba(2, 10, 19, 0.75);
+    border: 1px solid rgba(239, 241, 197, 0.25);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+}
+
+.project-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-03);
+    padding: var(--spacing-06);
+}
+
+.project-info-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--spacing-03);
+}
+
+.project-title {
+    font-family: var(--ff-oswald);
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 500;
+    color: var(--text-high-contrast);
+}
+
+.project-year {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-brand-300);
+    white-space: nowrap;
+}
+
+.project-category {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-gray-100);
+    letter-spacing: 0.02em;
+}
+
+.project-description {
+    font-size: 0.92rem;
+}
+
+.project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: var(--spacing-02);
+}
+
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-06);
+    margin-top: var(--spacing-02);
+}
+
+.project-links a {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-gray-100);
+    transition: color 0.25s ease;
+}
+
+.project-links a:hover,
+.project-links a:focus-visible {
+    color: var(--clr-brand-300);
+}
+
+/* Solo con ratón: la ficha se descubre sobre la imagen. Con dedo no hay hover, así que
+   fuera de aquí la ficha va siempre visible bajo la captura. */
+@media (hover: hover) and (pointer: fine) {
+    .project-card.has-media .project-info {
+        position: absolute;
+        inset: 0;
+        justify-content: flex-end;
+        background: linear-gradient(
+            to top,
+            rgba(2, 10, 19, 0.97) 40%,
+            rgba(2, 10, 19, 0.88) 70%,
+            rgba(2, 10, 19, 0.45)
+        );
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-card.has-media:hover .project-info,
+    .project-card.has-media:focus-within .project-info {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .project-info {
+        transition: none;
+    }
+
+    .project-card:hover,
+    .project-card:focus-within {
+        transform: none;
+    }
+}

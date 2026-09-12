@@ -35,6 +35,10 @@ export class PortfolioService {
 
   readonly projects = computed<Project[]>(() => {
     const lang = this.lang();
-    return PROJECTS.map(({ description, ...rest }) => ({ ...rest, description: description[lang] }));
+    return PROJECTS.map(({ description, category, ...rest }) => ({
+      ...rest,
+      description: description[lang],
+      category: category?.[lang]
+    }));
   });
 }

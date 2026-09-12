@@ -9,12 +9,13 @@ import {
 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ProjectsSectionComponent } from '../projects/projects-section.component';
 import { PortfolioService } from '../shared/services/portfolio.service';
 import { revealOnScroll } from '../shared/utils/reveal-on-scroll';
 
 @Component({
     selector: 'app-about',
-    imports: [TranslatePipe],
+    imports: [TranslatePipe, ProjectsSectionComponent],
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './about.component.html',
     styleUrl: './about.component.css'

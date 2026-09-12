@@ -29,10 +29,17 @@
     "description": "Más de cuatro años construyendo interfaces, desde WordPress hasta arquitecturas de microfrontends con Angular.",
     "backToTop": "Volver arriba"
   },
+  "projects": {
+    "tag": "// 03. PROYECTOS",
+    "headline": "Cosas que he construido",
+    "description": "Proyectos que he llevado de principio a fin, de la interfaz a la puesta en producción.",
+    "visit": "Ver proyecto",
+    "code": "Página de detalle"
+  },
   "education": {
-    "tag": "// 03. FORMACIÓN"
+    "tag": "// 04. FORMACIÓN"
   },
   "languages": {
-    "tag": "// 04. IDIOMAS"
+    "tag": "// 05. IDIOMAS"
   }
 }
