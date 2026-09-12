@@ -181,6 +181,20 @@ export const PROJECTS: ProjectSource[] = [
     image: 'assets/images/irudesigner.png'
   },
   {
+    id: 'fitness-booking',
+    title: 'Fitness Booking',
+    category: {
+      es: 'App de reserva de clases',
+      en: 'Class booking app'
+    },
+    description: {
+      es: 'Proyecto personal: plataforma para reservar clases en un box de entrenamiento.',
+      en: 'Personal project: a platform for booking classes at a training box.'
+    },
+    tags: [],
+    image: 'assets/images/fitness-booking.png'
+  },
+  {
     id: 'joseadu-portfolio',
     title: 'joseadu.com',
     category: {
