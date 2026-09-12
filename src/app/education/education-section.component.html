@@ -1,8 +1,16 @@
 <section class="section">
     <div class="wrapper">
+        <div class="section-intro reveal-item" #revealItem>
+            <span class="section-tag">{{ 'education.tag' | translate }}</span>
+            <h2 class="section-headline">{{ 'education.headline' | translate }}</h2>
+            <p class="section-description">
+                {{ 'education.description' | translate }}
+            </p>
+        </div>
+
         <div class="side-by-side">
             <div class="side-card reveal-item" #revealItem>
-                <span class="section-tag">{{ 'education.tag' | translate }}</span>
+                <span class="side-title">{{ 'education.studies' | translate }}</span>
                 <div class="side-list">
                     @for (edu of education(); track edu.institution + edu.period) {
                         <div class="side-item">
@@ -25,7 +33,7 @@
             </div>
 
             <div class="side-card reveal-item" #revealItem>
-                <span class="section-tag">{{ 'languages.tag' | translate }}</span>
+                <span class="side-title">{{ 'education.languages' | translate }}</span>
                 <div class="side-list">
                     @for (lang of languages(); track lang.language) {
                         <div class="side-item">

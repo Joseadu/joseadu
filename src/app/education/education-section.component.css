@@ -4,6 +4,15 @@
     gap: var(--spacing-09);
 }
 
+/* Encabezado de cada columna dentro de la sección (Formación / Idiomas). */
+.side-title {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-brand-300);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+}
+
 .side-card {
     display: flex;
     flex-direction: column;

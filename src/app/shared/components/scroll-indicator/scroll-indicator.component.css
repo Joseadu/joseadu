@@ -68,7 +68,7 @@
     .scroll-indicator.is-inline {
         position: static;
         transform: none;
-        margin-top: var(--spacing-09);
+        margin-top: var(--spacing-13);
     }
 
     .scroll-indicator.is-inline:hover {

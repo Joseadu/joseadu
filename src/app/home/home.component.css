@@ -52,13 +52,35 @@
     width: 100%;
 }
 
+/* Hueco para el indicador anclado al fondo de la sección: el propio indicador se ancla a 2.5rem
+   del borde, así que este padding es lo que separa al ratón del contenido de arriba. */
+.section-wrapper.has-indicator {
+    padding-bottom: var(--spacing-16);
+}
+
+/* La última sección llena la pantalla como el hero: si no, al llegar a ella el scroll topa con el
+   final del documento y se queda viendo el final de Proyectos. El contenido arriba y el indicador
+   abajo del todo; si el contenido crece más que la pantalla, fluye con normalidad. */
+.section-wrapper.is-full-height {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .footer-scroll-wrapper {
     display: flex;
     justify-content: center;
-    padding-block: var(--spacing-12);
+    padding-block: var(--spacing-16) var(--spacing-12);
 }
 
 @media (width < 768px) {
+    /* En móvil el indicador va en el flujo, con su propio margen: el padding sobraría. */
+    .section-wrapper.has-indicator {
+        padding-bottom: 0;
+    }
+
     .about-hero {
         flex-direction: column;
         /* Empuja el indicador al fondo real de la pantalla cuando el contenido es más corto que

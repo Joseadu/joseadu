@@ -39,9 +39,10 @@
     "code": "Página de detalle"
   },
   "education": {
-    "tag": "// 04. FORMACIÓN"
-  },
-  "languages": {
-    "tag": "// 05. IDIOMAS"
+    "tag": "// 04. FORMACIÓN E IDIOMAS",
+    "headline": "Sigo aprendiendo",
+    "description": "Formación continua por mi cuenta y los idiomas con los que trabajo.",
+    "studies": "Formación",
+    "languages": "Idiomas"
   }
 }

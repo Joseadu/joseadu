@@ -39,9 +39,10 @@
     "code": "Project details"
   },
   "education": {
-    "tag": "// 04. EDUCATION"
-  },
-  "languages": {
-    "tag": "// 05. LANGUAGES"
+    "tag": "// 04. EDUCATION & LANGUAGES",
+    "headline": "Still learning",
+    "description": "Self-driven, continuous training, and the languages I work in.",
+    "studies": "Education",
+    "languages": "Languages"
   }
 }
