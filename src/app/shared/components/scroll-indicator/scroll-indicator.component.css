@@ -59,9 +59,12 @@
     }
 }
 
+/* Sin anclar, el centrado por left/transform ya no aplica. Un <button> se ajusta a su contenido,
+   así que se centra con márgenes automáticos en vez de depender de que el padre sea flex. */
 .scroll-indicator.scroll-up {
     position: static;
     transform: none;
+    margin-inline: auto;
 }
 
 @media (width < 768px) {
@@ -69,6 +72,7 @@
         position: static;
         transform: none;
         margin-top: var(--spacing-13);
+        margin-inline: auto;
     }
 
     .scroll-indicator.is-inline:hover {
