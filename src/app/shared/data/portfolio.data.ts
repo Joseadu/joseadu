@@ -177,7 +177,7 @@ export const PROJECTS: ProjectSource[] = [
     },
     tags: [],
     link: 'https://irudesigner.com/proyectos',
-    github: '/projects/irudesigner',
+    github: 'https://github.com/Joseadu/irudesigner',
     image: 'assets/images/irudesigner.png'
   },
   {
@@ -192,22 +192,24 @@ export const PROJECTS: ProjectSource[] = [
       en: 'Personal project: a platform for booking classes at a training box.'
     },
     tags: [],
-    image: 'assets/images/fitness-booking.png'
+    image: 'assets/images/fitness-booking.png',
+    github: 'https://github.com/Joseadu/fitness-booking',
   },
   {
-    id: 'joseadu-portfolio',
-    title: 'joseadu.com',
+    id: 'libralix',
+    title: 'Libralix',
     category: {
-      es: 'Portfolio personal',
-      en: 'Personal portfolio'
+      es: 'Red social para lectores',
+      en: 'Social network for readers'
     },
     year: '2026',
     description: {
       es: 'Portfolio personal interactivo desarrollado con Angular 19, OnPush, Signals y diseño minimalista enfocado en rendimiento y animaciones fluidas.',
       en: 'Interactive personal portfolio built with Angular 19, OnPush and Signals, with a minimalist design focused on performance and smooth animations.'
     },
-    tags: ['Angular 19', 'TypeScript', 'CSS Tokens', 'Signals', 'OnPush'],
-    github: 'https://github.com/joseadu',
-    featured: true
+    tags: [],
+    github: 'https://github.com/Joseadu/libralix',
+    featured: true,
+    image: 'assets/images/libralix.png'
   }
 ];
