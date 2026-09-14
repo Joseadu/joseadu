@@ -7,7 +7,6 @@ import {
   OnDestroy,
   viewChildren
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PortfolioService } from '../shared/services/portfolio.service';
@@ -20,7 +19,7 @@ import { revealOnScroll } from '../shared/utils/reveal-on-scroll';
  */
 @Component({
   selector: 'app-projects-section',
-  imports: [TranslatePipe, RouterLink],
+  imports: [TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './projects-section.component.html',
   styleUrl: './projects-section.component.css'

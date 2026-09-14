@@ -58,15 +58,9 @@
                                     </a>
                                 }
                                 @if (project.github) {
-                                    @if (project.github.startsWith('/')) {
-                                        <a [routerLink]="project.github">
-                                            {{ 'projects.code' | translate }} <span aria-hidden="true">→</span>
-                                        </a>
-                                    } @else {
-                                        <a [href]="project.github" target="_blank" rel="noopener noreferrer">
-                                            {{ 'projects.code' | translate }} <span aria-hidden="true">↗</span>
-                                        </a>
-                                    }
+                                    <a [href]="project.github" target="_blank" rel="noopener noreferrer">
+                                        {{ 'projects.github' | translate }} <span aria-hidden="true">↗</span>
+                                    </a>
                                 }
                             </div>
                         }
