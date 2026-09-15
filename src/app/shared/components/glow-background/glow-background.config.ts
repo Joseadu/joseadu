@@ -24,6 +24,21 @@ export const GLOW_COMPOSITIONS: Record<string, GlowComposition> = {
   experience: [
     { x: 0.88, y: 0.2, scale: 0.7, opacity: 0.3 },
     { x: 0.1, y: 0.85, scale: 0.8, opacity: 0.3 }
+  ],
+  // Vuelve la diagonal al otro lado, para que el salto desde experiencia cruce la pantalla.
+  projects: [
+    { x: 0.2, y: 0.78, scale: 0.95, opacity: 0.38 },
+    { x: 0.82, y: 0.28, scale: 0.9, opacity: 0.4 }
+  ],
+  // Sección tranquila: luces más pequeñas, apagadas y separadas en vertical.
+  education: [
+    { x: 0.3, y: 0.15, scale: 0.7, opacity: 0.26 },
+    { x: 0.72, y: 0.9, scale: 0.8, opacity: 0.28 }
+  ],
+  // Cierre: las dos se juntan y suben de intensidad, como un foco detrás del correo.
+  contact: [
+    { x: 0.42, y: 0.52, scale: 1.2, opacity: 0.5 },
+    { x: 0.6, y: 0.48, scale: 1.05, opacity: 0.45 }
   ]
 };
 
