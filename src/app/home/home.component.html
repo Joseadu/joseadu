@@ -60,9 +60,17 @@
 </div>
 
 <!-- SECCIÓN FORMACIÓN E IDIOMAS -->
-<div id="education" class="section-wrapper is-full-height" appScrollSection="education"
+<div id="education" class="section-wrapper has-indicator" appScrollSection="education"
      [sectionLabel]="'sections.education' | translate">
     <app-education-section />
+
+    <app-scroll-indicator target="contact" [label]="'sections.contact' | translate" [inline]="true" />
+</div>
+
+<!-- SECCIÓN CONTACTO (cierre de la página) -->
+<div id="contact" class="section-wrapper" appScrollSection="contact"
+     [sectionLabel]="'sections.contact' | translate">
+    <app-contact-section />
 
     <!-- Indicador al pie para volver al inicio -->
     <div class="footer-scroll-wrapper">

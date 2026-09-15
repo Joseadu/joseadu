@@ -4,14 +4,20 @@
     "logoAlt": "Logo de joseadu",
     "about": "Sobre mí",
     "experience": "Experiencia",
-    "language": "Idioma"
+    "projects": "Proyectos",
+    "education": "Formación",
+    "contact": "Contacto",
+    "language": "Idioma",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
   },
   "sections": {
     "hero": "Inicio",
     "about": "Sobre mí",
     "experience": "Experiencia",
     "projects": "Proyectos",
-    "education": "Formación"
+    "education": "Formación",
+    "contact": "Contacto"
   },
   "hero": {
     "greeting": "Hola, soy",
@@ -44,5 +50,14 @@
     "description": "Formación continua por mi cuenta y los idiomas con los que trabajo.",
     "studies": "Formación",
     "languages": "Idiomas"
+  },
+  "contact": {
+    "tag": "// 05. CONTACTO",
+    "headline": "Hablamos",
+    "description": "¿Tienes un proyecto entre manos o una vacante que encaje? Escríbeme y te contesto.",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "mailto": "o abrir tu cliente de correo",
+    "cv": "Descargar CV"
   }
 }

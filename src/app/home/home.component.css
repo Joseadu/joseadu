@@ -46,27 +46,24 @@
     margin-top: var(--spacing-02);
 }
 
-/* Bloques de contenido que son sección del paginado (experiencia, proyectos, formación). */
+/* Bloques de contenido que son sección del paginado (experiencia, proyectos, formación, contacto).
+   Todas llenan como mínimo la pantalla: al saltar a una más baja que la vista, se vería asomando
+   la siguiente por debajo. El contenido va arriba y el indicador abajo del todo; si el contenido
+   crece más que la pantalla, fluye con normalidad. */
 .section-wrapper {
     position: relative;
     width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* Hueco para el indicador anclado al fondo de la sección: el propio indicador se ancla a 2.5rem
    del borde, así que este padding es lo que separa al ratón del contenido de arriba. */
 .section-wrapper.has-indicator {
     padding-bottom: var(--spacing-16);
-}
-
-/* La última sección llena la pantalla como el hero: si no, al llegar a ella el scroll topa con el
-   final del documento y se queda viendo el final de Proyectos. El contenido arriba y el indicador
-   abajo del todo; si el contenido crece más que la pantalla, fluye con normalidad. */
-.section-wrapper.is-full-height {
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
 .footer-scroll-wrapper {

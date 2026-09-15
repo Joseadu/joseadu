@@ -4,7 +4,7 @@
  */
 export const SECTION_SCROLL_CONFIG = {
   /** Distancia acumulada (px) de un gesto de rueda/trackpad para forzar el commit a la siguiente/anterior sección. */
-  DRAG_COMMIT_THRESHOLD_PX: 400,
+  DRAG_COMMIT_THRESHOLD_PX: 200,
   /** Lo mismo para un arrastre con el dedo (móvil): la pantalla es corta y el dedo recorre menos. */
   DRAG_COMMIT_THRESHOLD_TOUCH_PX: 50,
   /** Velocidad (px/s) a partir de la cual un gesto corto pero rápido (flick) también commitea. */
