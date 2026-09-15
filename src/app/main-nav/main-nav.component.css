@@ -4,13 +4,13 @@
     left: 0;
     width: 100%;
     z-index: 100;
-    /* backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background-color: rgba(2, 10, 19, 0.7);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04); */
 }
 
+/* Posicionada a propósito: sin esto el panel del menú, que sí está posicionado, se pinta encima
+   de la barra y tapa la X, dejando el menú sin forma de cerrarse salvo pulsando un enlace. */
 .nav-container {
+    position: relative;
+    z-index: 2;
     min-height: var(--nav-height);
     display: flex;
     align-items: center;
@@ -37,6 +37,17 @@ nav {
     transform: scale(1.05);
 }
 
+.nav-icon {
+    width: 36px;
+    height: 36px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-07);
+}
+
 .nav-links {
     display: flex;
     gap: var(--spacing-07);
@@ -52,6 +63,11 @@ nav {
 }
 
 .nav-links a:hover {
+    color: var(--clr-brand-300);
+}
+
+/* La sección en la que estás, según el paginado. */
+.nav-links a.is-active {
     color: var(--clr-brand-300);
 }
 
@@ -91,14 +107,146 @@ nav {
     cursor: default;
 }
 
-/* Tres elementos en el header en pantallas estrechas: menos separación. */
-@media (width < 480px) {
-    .nav-links {
-        gap: var(--spacing-05);
+.nav-cv {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--clr-brand-300);
+    color: var(--clr-brand-300);
+    white-space: nowrap;
+    transition: background 0.25s ease;
+}
+
+.nav-cv:hover,
+.nav-cv:focus-visible {
+    background: rgba(239, 241, 197, 0.1);
+}
+
+/* Hamburguesa: dos trazos que se cruzan al abrir. Solo existe en móvil. */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--clr-gray-100);
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.nav-toggle.is-open span {
+    background: var(--clr-brand-300);
+}
+
+.nav-toggle.is-open span:first-child {
+    transform: translateY(4px) rotate(45deg);
+}
+
+.nav-toggle.is-open span:last-child {
+    transform: translateY(-4px) rotate(-45deg);
+}
+
+.mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--spacing-11);
+    padding: calc(var(--nav-height) + var(--spacing-11)) var(--spacing-05) var(--spacing-13);
+    background: var(--clr-navyblue);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.mobile-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-07);
+}
+
+.mobile-menu-list a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-family: var(--ff-oswald);
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+    font-weight: 500;
+    color: var(--text-high-contrast);
+    cursor: pointer;
+}
+
+.mobile-menu-list a.is-active {
+    color: var(--clr-brand-300);
+}
+
+.mobile-menu-index {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--clr-brand-300);
+}
+
+.mobile-menu-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-07);
+    padding-top: var(--spacing-09);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobile-menu-social {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-07);
+}
+
+.mobile-menu-social a {
+    display: flex;
+    color: var(--clr-gray-100);
+    transition: color 0.25s ease;
+}
+
+.mobile-menu-social a:hover,
+.mobile-menu-social a:focus-visible {
+    color: var(--clr-brand-300);
+}
+
+@media (width < 900px) {
+    /* Las pestañas y el CV se mudan al menú a pantalla completa. */
+    .nav-links,
+    .nav-right > .nav-cv {
+        display: none;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-right {
+        gap: var(--spacing-06);
     }
 }
 
-.nav-icon {
-    width: 36px;
-    height: 36px;
+@media (prefers-reduced-motion: reduce) {
+    .nav-brand,
+    .nav-toggle span,
+    .nav-cv {
+        transition: none;
+    }
 }
