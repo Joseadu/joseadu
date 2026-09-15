@@ -11,6 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AboutComponent } from '../about/about.component';
+import { ContactSectionComponent } from '../contact/contact-section.component';
 import { EducationSectionComponent } from '../education/education-section.component';
 import { ProjectsSectionComponent } from '../projects/projects-section.component';
 import { ScrollSectionDirective } from '../shared/directives/scroll-section.directive';
@@ -23,6 +24,7 @@ import { revealOnScroll } from '../shared/utils/reveal-on-scroll';
     AboutComponent,
     ProjectsSectionComponent,
     EducationSectionComponent,
+    ContactSectionComponent,
     ScrollSectionDirective,
     ScrollIndicatorComponent,
     TranslatePipe

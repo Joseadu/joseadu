@@ -1,0 +1,105 @@
+.contact-mail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-06);
+}
+
+.contact-address {
+    font-family: var(--ff-roboto-mono);
+    font-size: clamp(1.1rem, 3.5vw, 1.9rem);
+    color: var(--text-high-contrast);
+    word-break: break-all;
+}
+
+.contact-copy {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--clr-gray-100);
+    cursor: pointer;
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+}
+
+.contact-copy:hover,
+.contact-copy:focus-visible {
+    border-color: var(--clr-brand-300);
+    color: var(--clr-brand-300);
+    background: rgba(239, 241, 197, 0.06);
+}
+
+/* Salida secundaria para quien sí use un cliente de correo. */
+.contact-mailto {
+    display: inline-block;
+    margin-top: var(--spacing-04);
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    color: var(--clr-gray-100);
+    opacity: 0.7;
+    transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+.contact-mailto:hover,
+.contact-mailto:focus-visible {
+    color: var(--clr-brand-300);
+    opacity: 1;
+}
+
+.contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-09);
+    margin-top: var(--spacing-11);
+}
+
+.contact-cv {
+    font-family: var(--ff-roboto-mono);
+    font-size: var(--font-size-sm);
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid var(--clr-brand-300);
+    color: var(--clr-brand-300);
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.contact-cv:hover,
+.contact-cv:focus-visible {
+    background: rgba(239, 241, 197, 0.1);
+    transform: translateY(-2px);
+}
+
+.contact-social {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-07);
+}
+
+.contact-social a {
+    display: flex;
+    color: var(--clr-gray-100);
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.contact-social a:hover,
+.contact-social a:focus-visible {
+    color: var(--clr-brand-300);
+    transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contact-cv,
+    .contact-social a {
+        transition: color 0.25s ease, background 0.25s ease;
+    }
+
+    .contact-cv:hover,
+    .contact-cv:focus-visible,
+    .contact-social a:hover,
+    .contact-social a:focus-visible {
+        transform: none;
+    }
+}

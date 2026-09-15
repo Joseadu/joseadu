@@ -4,14 +4,20 @@
     "logoAlt": "joseadu logo",
     "about": "About",
     "experience": "Experience",
-    "language": "Language"
+    "projects": "Projects",
+    "education": "Education",
+    "contact": "Contact",
+    "language": "Language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "sections": {
     "hero": "Home",
     "about": "About",
     "experience": "Experience",
     "projects": "Projects",
-    "education": "Education"
+    "education": "Education",
+    "contact": "Contact"
   },
   "hero": {
     "greeting": "Hi, I'm",
@@ -44,5 +50,14 @@
     "description": "Self-driven, continuous training, and the languages I work in.",
     "studies": "Education",
     "languages": "Languages"
+  },
+  "contact": {
+    "tag": "// 05. CONTACT",
+    "headline": "Let's talk",
+    "description": "Got a project in mind or a role that fits? Drop me a line and I'll get back to you.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "mailto": "or open your mail client",
+    "cv": "Download CV"
   }
 }
