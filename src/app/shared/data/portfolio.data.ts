@@ -172,8 +172,8 @@ export const PROJECTS: ProjectSource[] = [
       en: 'Website for a brand designer'
     },
     description: {
-      es: 'Este es el sitio web de Irudesigner, diseñadora de marcas',
-      en: 'This is a website for Irudesigner, a brand designer.'
+      es: 'La web personal de una diseñadora de marcas, donde el trabajo tenía que verse antes que leerse. Rejilla de proyectos, ficha propia para cada caso y la web entera en español e inglés.',
+      en: 'A portfolio for a brand designer, where the work had to be seen before it was read. A project grid, a page of its own for each case, and the whole site in Spanish and English.'
     },
     tags: [],
     link: 'https://irudesigner.com/proyectos',
@@ -188,8 +188,8 @@ export const PROJECTS: ProjectSource[] = [
       en: 'Class booking app'
     },
     description: {
-      es: 'Proyecto personal: plataforma para reservar clases en un box de entrenamiento.',
-      en: 'Personal project: a platform for booking classes at a training box.'
+      es: 'Reserva de clases para un box de entrenamiento: horarios, plazas que quedan, gestión de tu box, las reservas de cada atleta, etc. Una plataforma para conectar negocio y cliente.',
+      en: 'A personal project. Class booking for a training box: schedules, spots left and each member bookings, instead of a list kept by hand.'
     },
     tags: [],
     image: 'assets/images/fitness-booking.png',
@@ -204,8 +204,8 @@ export const PROJECTS: ProjectSource[] = [
     },
     year: '2026',
     description: {
-      es: 'Portfolio personal interactivo desarrollado con Angular 19, OnPush, Signals y diseño minimalista enfocado en rendimiento y animaciones fluidas.',
-      en: 'Interactive personal portfolio built with Angular 19, OnPush and Signals, with a minimalist design focused on performance and smooth animations.'
+      es: 'Una red social para lectores: qué estás leyendo, qué te ha parecido y qué leen los que sigues. La idea es que descubrir un libro venga de alguien, no de un algoritmo.',
+      en: 'A social network for readers: what you are reading, what you made of it and what the people you follow are reading. The idea being that a book comes recommended by someone, not by an algorithm.'
     },
     tags: [],
     github: 'https://github.com/Joseadu/libralix',
