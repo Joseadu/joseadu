@@ -8,8 +8,7 @@ import { Localized } from '../i18n/language.config';
  * que se explique solo.
  */
 export const CONTACT = {
-  /** TODO: sustituir por el correo que quieras publicar. */
-  email: 'hola@joseadu.com',
+  email: 'hello@joseadu.com',
   linkedin: 'https://www.linkedin.com/in/josea-du',
   github: 'https://github.com/Joseadu',
   /** TODO: falta el PDF en inglés; hasta que esté en src/assets/cv/, ese botón dará 404. */

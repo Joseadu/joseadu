@@ -18,7 +18,7 @@
                             <span class="timeline-period">{{ exp.period }}</span>
                         </div>
                         <p class="timeline-company">
-                            {{ exp.company }}{{ exp.client ? ' · ' + exp.client : '' }}
+                            {{ exp.company }}{{ exp.client ? ' · ' + exp.client : '' }}{{ exp.location ? ' · ' + exp.location : '' }}
                         </p>
                         <ul class="timeline-list dot-list">
                             @for (item of exp.responsibilities; track item) {

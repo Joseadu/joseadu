@@ -2,6 +2,8 @@ export interface Experience {
   company: string;
   client?: string;
   period: string;
+  /** Dónde se hizo el trabajo: remoto, presencial y plaza. */
+  location?: string;
   role: string;
   responsibilities: string[];
   stack: string[];

@@ -13,9 +13,10 @@ export class PortfolioService {
 
   readonly experiences = computed<Experience[]>(() => {
     const lang = this.lang();
-    return EXPERIENCES.map(({ responsibilities, ...rest }) => ({
+    return EXPERIENCES.map(({ responsibilities, location, ...rest }) => ({
       ...rest,
-      responsibilities: responsibilities[lang]
+      responsibilities: responsibilities[lang],
+      location: location?.[lang]
     }));
   });
 
