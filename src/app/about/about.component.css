@@ -1,4 +1,11 @@
 .timeline {
+    /* Un único origen para el punto, la línea y la tarjeta: así el punto cae siempre centrado con
+       la primera línea del título en vez de con un valor puesto a ojo. */
+    --timeline-marker-size: 16px;
+    --timeline-card-padding: var(--spacing-07);
+    --timeline-role-size: clamp(1.05rem, 2vw, 1.3rem);
+    --timeline-role-line: calc(var(--timeline-role-size) * 1.3);
+
     position: relative;
     display: flex;
     flex-direction: column;
@@ -8,8 +15,9 @@
 .timeline::before {
     content: "";
     position: absolute;
-    left: 7px;
-    top: 8px;
+    /* Nace en el centro del primer punto y muere difuminada bajo el último. */
+    left: calc(var(--timeline-marker-size) / 2);
+    top: calc(var(--timeline-card-padding) + var(--timeline-role-line) / 2);
     bottom: 8px;
     width: 1px;
     background: linear-gradient(
@@ -24,16 +32,19 @@
 .timeline-item {
     position: relative;
     display: grid;
-    grid-template-columns: 16px 1fr;
+    grid-template-columns: var(--timeline-marker-size) 1fr;
     gap: var(--spacing-06);
     align-items: start;
 }
 
 .timeline-marker {
-    position: relative;
-    top: 6px;
-    width: 16px;
-    height: 16px;
+    width: var(--timeline-marker-size);
+    height: var(--timeline-marker-size);
+    /* Baja hasta el centro de la primera línea del título: padding de la tarjeta, media línea,
+       y se descuenta su propio radio. */
+    margin-top: calc(
+        var(--timeline-card-padding) + var(--timeline-role-line) / 2 - var(--timeline-marker-size) / 2
+    );
     border-radius: 50%;
     background: var(--clr-navyblue);
     border: 2px solid var(--clr-brand-300);
@@ -47,7 +58,7 @@
 .timeline-card {
     display: grid;
     gap: var(--spacing-03);
-    padding: var(--spacing-07);
+    padding: var(--timeline-card-padding);
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.025);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -70,7 +81,8 @@
 
 .timeline-role {
     font-family: var(--ff-oswald);
-    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-size: var(--timeline-role-size);
+    line-height: 1.3;
     font-weight: 500;
     color: var(--text-high-contrast);
 }
@@ -105,12 +117,13 @@
 }
 
 @media (width < 768px) {
-    .timeline-item {
-        grid-template-columns: 12px 1fr;
-        gap: var(--spacing-04);
+    /* Cambian las medidas, no las reglas: el punto y la línea se recolocan solos. */
+    .timeline {
+        --timeline-marker-size: 12px;
+        --timeline-card-padding: var(--spacing-05);
     }
 
-    .timeline-card {
-        padding: var(--spacing-05);
+    .timeline-item {
+        gap: var(--spacing-04);
     }
 }
