@@ -8,7 +8,10 @@ import { Project } from '../models/project.model';
  * resuelve al idioma activo.
  */
 
-export type ExperienceSource = Omit<Experience, 'responsibilities'> & { responsibilities: Localized<string[]> };
+export type ExperienceSource = Omit<Experience, 'responsibilities' | 'location'> & {
+  responsibilities: Localized<string[]>;
+  location?: Localized<string>;
+};
 export type EducationSource = Omit<Education, 'title' | 'details'> & {
   title: Localized<string>;
   details?: Localized<string[]>;
@@ -24,74 +27,78 @@ export const EXPERIENCES: ExperienceSource[] = [
     company: 'Knowmad Mood',
     client: 'Exolum',
     period: '12/2025 - 05/2026',
+    location: { es: 'Remoto', en: 'Remote' },
     role: 'Frontend Software Developer',
     responsibilities: {
       es: [
-        'Desarrollo de aplicaciones Angular en arquitectura basada en microservicios.',
-        'Migración de código legacy a estándares modernos (Signals, Standalone Components).',
+        'Desarrollo de microfrontends dentro de una aplicación contenedora, cada uno un proyecto independiente.',
         'Gestión global del estado mediante NgRx.',
-        'Implementación de AG Grid para aplicaciones empresariales.',
-        'Desarrollo de testing unitario con Jasmine.'
+        'Integración con APIs REST.',
+        'Implementación de AG Grid para tablas complejas.',
+        'Desarrollo de testing unitario con Jasmine y revisión de código.'
       ],
       en: [
-        'Developed Angular applications within a microservices-based architecture.',
-        'Migrated legacy code to modern standards (Signals, Standalone Components).',
+        'Built micro-frontends inside a container application, each one a separate project.',
         'Managed global application state with NgRx.',
-        'Implemented AG Grid for enterprise applications.',
-        'Wrote unit tests with Jasmine.'
+        'Integrated REST APIs.',
+        'Implemented AG Grid for complex data tables.',
+        'Wrote unit tests with Jasmine and took part in code reviews.'
       ]
     },
-    stack: ['Angular', 'TypeScript', 'RxJS', 'NgRx', 'Signals', 'AG Grid', 'Jasmine']
+    stack: ['Angular 21', 'TypeScript', 'RxJS', 'NgRx', 'Signals', 'AG Grid', 'Jasmine', 'PrimeNG', 'Microfront']
   },
   {
     company: 'Knowmad Mood',
     client: 'El Corte Inglés',
     period: '03/2025 - 12/2025',
+    location: { es: 'Remoto', en: 'Remote' },
     role: 'Frontend Software Developer',
     responsibilities: {
       es: [
-        'Desarrollo y mantenimiento de aplicaciones empresariales con Angular.',
+        'Migración del backoffice a una versión moderna de Angular.',
         'Creación de componentes reutilizables y formularios dinámicos.',
         'Integración con APIs REST.',
-        'Revisión de código y gestión de Pull Requests.',
-        'Trabajo bajo metodología Scrum.'
+        'Participación activa en revisiones de código y gestión de Pull Requests.',
+        'Relación directa con el equipo de diseño y producto, bajo metodología Scrum.'
       ],
       en: [
-        'Developed and maintained enterprise applications with Angular.',
+        'Migrated the back office to a modern version of Angular.',
         'Built reusable components and dynamic forms.',
         'Integrated REST APIs.',
-        'Reviewed code and managed Pull Requests.',
-        'Worked in Scrum teams.'
+        'Took an active part in code reviews and pull request management.',
+        'Worked directly with the design and product teams, in Scrum.'
       ]
     },
-    stack: ['Angular 16-19', 'RxJS', 'NgRx', 'Cypress', 'Git', 'Bitbucket']
+    stack: ['Angular 19-20', 'RxJS', 'NgRx', 'Cypress', 'Bitbucket', 'Custom CSS Framework']
   },
   {
     company: 'Mydance',
     period: '03/2024 - 03/2025',
+    location: { es: 'Remoto', en: 'Remote' },
     role: 'Frontend Angular Developer',
     responsibilities: {
       es: [
-        'Desarrollo de arquitectura microfrontend mediante Native Federation.',
-        'Implementación de autenticación OAuth2.',
-        'Gestión de estado con NgRx.',
-        'Desarrollo de componentes reutilizables y formularios complejos.',
+        'Desarrollo del front de la aplicación con Angular 18.',
+        'Implementación de un componente servido como microfrontend con Native Federation.',
+        'Implementación de autenticación OAuth2 y gestión de estado con NgRx.',
+        'Desarrollo del design system con componentes reutilizables.',
         'Mentoría de un desarrollador junior.'
       ],
       en: [
-        'Built a micro-frontend architecture with Native Federation.',
-        'Implemented OAuth2 authentication.',
-        'Managed state with NgRx.',
-        'Developed reusable components and complex forms.',
+        'Built the front end of the application with Angular 18.',
+        'Implemented a component served as a micro-frontend with Native Federation.',
+        'Implemented OAuth2 authentication and state management with NgRx.',
+        'Built the design system with reusable components.',
         'Mentored a junior developer.'
       ]
     },
-    stack: ['Angular 17-18', 'NgRx', 'OAuth2', 'Native Federation', 'Jasmine']
+    stack: ['Angular 17-18', 'NgRx', 'OAuth2', 'Microfront', 'Jasmine', 'Tailwind CSS']
   },
   {
     company: 'Izertis',
     client: 'BMW',
     period: '04/2023 - 12/2023',
+    location: { es: 'Remoto', en: 'Remote' },
     role: 'Junior Fullstack Consultant',
     responsibilities: {
       es: [
@@ -107,32 +114,33 @@ export const EXPERIENCES: ExperienceSource[] = [
         'Maintained corporate applications.'
       ]
     },
-    stack: ['Angular', '.NET MVC', 'SQL Server']
+    stack: ['Angular', '.NET', '.NET MVC', 'Entity Framework', 'SQL Server']
   },
   {
     company: 'Concilio Communications',
     period: '01/2021 - 08/2022',
+    location: { es: 'Presencial, Londres', en: 'On-site, London' },
     role: 'Web Developer',
     responsibilities: {
       es: [
-        'Desarrollo y mantenimiento de sitios WordPress.',
-        'Gestión de hosting e incidencias.',
-        'Comunicación directa con clientes.'
+        'Desarrollo y mantenimiento de la cartera de más de 80 webs WordPress de la agencia, para constructoras e inversores.',
+        'Interlocución directa con los clientes en inglés: toma de requisitos, propuesta de soluciones y coordinación de entregas.',
+        'Gestión del hosting y resolución de incidencias de los sitios en producción.'
       ],
       en: [
-        'Developed and maintained WordPress sites.',
-        'Managed hosting and support issues.',
-        'Worked directly with clients.'
+        'Developed and maintained the agency portfolio of over 80 WordPress sites, for construction companies and investors.',
+        'Worked directly with clients: gathering requirements, proposing solutions and coordinating deliveries.',
+        'Managed hosting and resolved incidents on live sites.'
       ]
     },
-    stack: ['Wordpress', 'Elementor Pro', 'Crocoblock stack']
+    stack: ['Wordpress', 'Elementor Pro', 'Crocoblock stack', 'Hosting Management']
   }
 ];
 
 export const EDUCATION: EducationSource[] = [
   {
     institution: 'Platzi',
-    period: '01/2021 - 10/2023',
+    period: '01/2021 - 04/2023',
     title: {
       es: 'Formación continua Frontend & Fullstack',
       en: 'Continuous Frontend & Fullstack training'
@@ -144,7 +152,7 @@ export const EDUCATION: EducationSource[] = [
   },
   {
     institution: 'IES La Rosaleda',
-    period: '00/2015 - 06/2017',
+    period: '09/2015 - 06/2017',
     title: {
       es: 'Técnico en Instalaciones de Telecomunicaciones',
       en: 'Vocational Diploma in Telecommunications Installations'
@@ -202,7 +210,6 @@ export const PROJECTS: ProjectSource[] = [
       es: 'Red social para lectores',
       en: 'Social network for readers'
     },
-    year: '2026',
     description: {
       es: 'Una red social para lectores: qué estás leyendo, qué te ha parecido y qué leen los que sigues. La idea es que descubrir un libro venga de alguien, no de un algoritmo.',
       en: 'A social network for readers: what you are reading, what you made of it and what the people you follow are reading. The idea being that a book comes recommended by someone, not by an algorithm.'
