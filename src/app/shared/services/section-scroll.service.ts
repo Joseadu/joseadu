@@ -88,6 +88,9 @@ export class SectionScrollService implements OnDestroy {
     }
     this.initialized = true;
 
+    // Este servicio usa ScrollTrigger por su cuenta, así que lo registra él en vez de confiar en
+    // que alguien lo haya hecho antes. registerPlugin es idempotente.
+    gsap.registerPlugin(ScrollTrigger);
     this.scrollGesture.init();
     this.setupReducedMotion();
 
