@@ -8,10 +8,6 @@ export const routes: Routes = [
         component: HomeComponent
     },
     {
-        path: 'about',
-        component: AboutComponent
-    },
-    {
         // Cualquier URL desconocida vuelve a la home. Antes apuntaba a 'home', que no existe como
         // ruta, así que la navegación fallaba en vez de redirigir.
         path: '**',
