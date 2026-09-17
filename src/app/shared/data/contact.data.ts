@@ -11,7 +11,6 @@ export const CONTACT = {
   email: 'hello@joseadu.com',
   linkedin: 'https://www.linkedin.com/in/josea-du',
   github: 'https://github.com/Joseadu',
-  /** TODO: falta el PDF en inglés; hasta que esté en src/assets/cv/, ese botón dará 404. */
   cv: {
     es: 'assets/cv/Jose-Diaz-Frontend-Angular-CV-es.pdf',
     en: 'assets/cv/Jose-Diaz-Frontend-Angular-CV-en.pdf'

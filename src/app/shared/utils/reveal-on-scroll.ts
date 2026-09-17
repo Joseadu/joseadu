@@ -1,6 +1,10 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// Quien usa el plugin lo registra: así esta utilidad funciona en cualquier contexto, sin depender
+// de que el arranque de la app lo haya hecho antes. registerPlugin es idempotente.
+gsap.registerPlugin(ScrollTrigger);
+
 export interface RevealOnScrollOptions {
   y?: number;
   duration?: number;

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { provideTranslateTesting } from '../shared/i18n/translate.testing';
 import { MainNavComponent } from './main-nav.component';
 
 describe('MainNavComponent', () => {
@@ -8,9 +9,9 @@ describe('MainNavComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MainNavComponent]
-    })
-    .compileComponents();
+      imports: [MainNavComponent],
+      providers: [provideTranslateTesting()]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MainNavComponent);
     component = fixture.componentInstance;
